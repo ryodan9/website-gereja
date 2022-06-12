@@ -17,11 +17,11 @@ import datetime
 app = Flask(__name__)
 
 app.config['SECRET_KEY'] = '$#PHenfge24'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/dbgereja'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/gerejaadb'
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = True
 
 db = SQLAlchemy(app)
-migrate = Migrate(app, db)
+# migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 bootstrap = Bootstrap(app)
 
@@ -53,7 +53,7 @@ class Kartukeluarga(db.Model):
     no_kk = db.Column(db.String(50))
     nama_kk = db.Column(db.String(50))
     kepala_keluarga = db.Column(db.String(50))
-    kkprofil = db.relationship('Profil', backref=db.backref('kartukeluarga', lazy=True))
+    kknya = db.relationship('Profil', backref=db.backref('kartukeluarga', lazy=True))
 
     def __init__(self, no_kk, nama_kk, kepala_keluarga):
         self.no_kk = no_kk
@@ -63,11 +63,11 @@ class Kartukeluarga(db.Model):
 class Profil(db.Model):
     __tablename__ = 'profil'
     id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(50))
     alamat = db.Column(db.Text)
     telepon = db.Column(db.String(15))
     wilayah = db.Column(db.Text)
     lingkungan = db.Column(db.Text)
-    nama = db.Column(db.String(50))
     jeniskelamin = db.Column(db.String(10))
     hub = db.Column(db.String(50))
     tempat_lahir = db.Column(db.String(100))
@@ -87,12 +87,12 @@ class Profil(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     kartukeluarga_id = db.Column(db.Integer, db.ForeignKey('kartukeluarga.id'))
 
-    def __init__(self, alamat, telepon, wilayah, lingkungan, nama, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tgl_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, user_id):
+    def __init__(self, nama, alamat, telepon, wilayah, lingkungan, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tgl_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, user_id, kartukeluarga_id):
+        self.nama = nama
         self.alamat = alamat
         self.telepon = telepon
         self.wilayah = wilayah
         self.lingkungan = lingkungan
-        self.nama = nama
         self.jeniskelamin = jeniskelamin
         self.hub = hub
         self.tempat_lahir = tempat_lahir
@@ -110,6 +110,7 @@ class Profil(db.Model):
         self.tgl_menikah = tgl_menikah
         self.pekerjaan = pekerjaan
         self.user_id = user_id
+        self.kartukeluarga_id = kartukeluarga_id
 
 class Pendaftaranbaptis(db.Model):
     __tablename__ = 'daftarbaptis'
