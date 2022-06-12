@@ -30,7 +30,7 @@ class Login(FlaskForm):
     render_kw={'autofocus':True, 'placeholder':'Username'})
     password = PasswordField('', validators=[InputRequired()],
     render_kw={'autofocus':True, 'placeholder':'Password'})
-    # role = SelectField('', validators=[InputRequired()], choices=[('Admin','Admin'), ('Umat', 'Umat')])
+    role = SelectField('', validators=[InputRequired()], choices=[('Admin','Admin'), ('Umat', 'Umat')])
 
 class User(db.Model):
     __tablename__ = 'user'
@@ -46,6 +46,19 @@ class User(db.Model):
         if password != '':
             self.password = bcrypt.generate_password_hash(password). decode('UTF-8')
         self.role = role
+
+class Kartukeluarga(db.Model):
+    __tablename__ = 'kartukeluarga'
+    id = db.Column(db.Integer, primary_key=True)
+    no_kk = db.Column(db.String(50))
+    nama_kk = db.Column(db.String(50))
+    kepala_keluarga = db.Column(db.String(50))
+    kkprofil = db.relationship('Profil', backref=db.backref('kartukeluarga'), lazy=True)
+
+    def __init__(self, no_kk, nama_kk, kepala_keluarga):
+        self.no_kk = no_kk
+        self.nama_kk = nama_kk
+        self.kepala_keluarga = kepala_keluarga
 
 class Profil(db.Model):
     __tablename__ = 'profil'
@@ -72,6 +85,7 @@ class Profil(db.Model):
     tgl_menikah = db.Column(db.String(20))
     pekerjaan = db.Column(db.String(50))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    kartukeluarga_id = db.Column(db.Integer, db.ForeignKey('kartukeluarga.id'))
 
     def __init__(self, alamat, telepon, wilayah, lingkungan, nama, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tgl_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, user_id):
         self.alamat = alamat
@@ -119,16 +133,6 @@ class Pendaftaranbaptis(db.Model):
         self.nama_wali = nama_wali
         self.user_id = user_id
 
-class Kartukeluarga(db.Model):
-    __tablename__ = 'kartukeluarga'
-    id = db.Column(db.Integer, primary_key=True)
-    no_kk = db.Column(db.String(50))
-    nama_kk = db.Column(db.String(50))
-    kepala_keluarga = db.Column(db.String(50))
-
-    def __init__(self, no_kk):
-        self.no_kk = no_kk
-
 db.create_all()
 
 def login_dulu(f):
@@ -175,7 +179,7 @@ def dashboard():
 @login_dulu
 def kelola_user():
     data = User.query.all()
-    return render_template('kelola_user.html', data=data)
+    return render_template('admin/kelola_user.html', data=data)
 
 @app.route('/tambahuser', methods=['GET', 'POST'])
 @login_dulu
@@ -193,7 +197,18 @@ def tambahuser():
 @login_dulu
 def kelola_kk():
     data = Kartukeluarga.query.all()
-    return render_template('')
+    return render_template('admin/kelola_kk.html', data=data)
+
+@app.route('/tambah_kk', methods=['GET', 'POST'])
+@login_dulu
+def tambah_kk():
+    if request.method == "POST":
+        no_kk = request.form['no_kk']
+        nama_kk = request.form['nama_kk']
+        kepala_keluarga = request.form['kepala_keluarga']
+        db.session.add(Kartukeluarga(no_kk, nama_kk, kepala_keluarga))
+        db.session.commit()
+        return redirect(request.referrer)
 # Halaman Umat Baptis Bayi
 # @app.route('/baptisbayi')
 

@@ -4,7 +4,7 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">Kelola Pendaftaran</h1>   
+      <h1 class="h2">Kelola Kartu Keluarga</h1>   
     </div>
 
     <div class="container">
@@ -18,55 +18,26 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" action="{{url_for('tambahdaftar')}}" id="#tbDaftar" method="POST">
-                    <div class="col-md-4">
-                      <label for="validationCustom01" class="form-label">Nama</label>
-                      <input type="text" class="form-control" id="validationCustom01" name="nama" required>
+                <form class="row g-3 needs-validation" action="{{url_for('tambah_kk')}}" id="#tbKK" method="POST">
+                    <div class="col-mb-3">
+                      <label for="validationCustom01" class="form-label">No Kartu Keluarga</label>
+                      <input type="text" class="form-control" id="validationCustom01" name="no_kk" required>
                     </div>
-                    <div class="col-md-4">
-                      <label for="validationCustom02" class="form-label">Tempat Lahir</label>
-                      <input type="text" class="form-control" id="validationCustom02" name="tl" required>
+                    <div class="col-mb-3">
+                      <label for="validationCustom02" class="form-label">Nama Kartu Keluarga</label>
+                      <input type="text" class="form-control" id="validationCustom02" name="nama_kk" required>
                     </div>
-                    <div class="col-md-4">
-                      <label for="validationCustomUsername" class="form-label">Tanggal Lahir</label>
+                    <div class="col-mb-3">
+                      <label for="validationCustomUsername" class="form-label">Kepala Keluarga</label>
                       <div class="input-group has-validation">
-                        <span class="input-group-text" id="inputGroupPrepend">@</span>
-                        <input type="date" class="form-control" id="validationCustomUsername" name="tgl_lahir" aria-describedby="inputGroupPrepend" required>
+                        <input type="text" class="form-control" id="validationCustomUsername" name="kepala_keluarga" aria-describedby="inputGroupPrepend" required>
                       </div>
                     </div>
-                    <div class="col-md-4">
-                        <label for="validationCustom04" class="form-label">Jenis Kelamin</label>
-                        <select class="form-select" id="validationCustom04" name="jk" required>
-                          <option selected disabled value="">Pilih...</option>
-                          <option value="Laki-laki">Laki-laki</option>
-                          <option value="Perempuan">Perempuan</option>
-                        </select>
-                      </div>
-                      <div class="col-md-4">
-                        <label for="validationCustom04" class="form-label">Status Pernikahan</label>
-                        <select class="form-select" name="status" id="validationCustom04" required>
-                          <option selected disabled value="">Pilih...</option>
-                          <option value="Belum Menikah">Belum Menikah</option>
-                          <option value="Sudah Menikah">Sudah Menikah</option>
-                          <option value="Bercerai">Bercerai</option>
-                        </select>
-                      </div>
-                    <div class="col-md-4">
-                      <label for="validationCustom05" class="form-label">Profesi</label>
-                      <input type="text" class="form-control" name="profesi" id="validationCustom05" required>
-                      <div class="invalid-feedback">
-                        Please provide a valid zip.
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="message-text" class="col-form-label">Alamat</label>
-                        <textarea class="form-control" id="message-text" name="alamat"></textarea>
-                    </div>
-                    <input type="hidden" name="keterangan" value="Diproses">
+                    <!-- <input type="hidden" name="keterangan" value="Diproses"> -->
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary">Send message</button>
+                <button type="submit" class="btn btn-primary">Tambah</button>
             </div>
             </form>
             </div>
@@ -74,18 +45,15 @@
         </div>
         <br><br>
         <div class="card">
-            <h5 class="card-header">Table Pasien</h5>
+            <h5 class="card-header">Table Kartu Keluarga</h5>
             <div class="card-body">
                 <table class="table table-bordered table-sm" id="myTable">
                     <thead class="table table-dark">
                       <tr>
                         <th scope="col">No.</th>
-                        <th scope="col">Nama Pasien</th>
-                        <th scope="col">Tempat Lahir</th>
-                        <th scope="col">Tanggal Lahir</th>
-                        <th scope="col">Status</th>
-                        <th scope="col">Profesi</th>
-                        <th scope="col">Alamat</th>
+                        <th scope="col">No Kartu Keluarga</th>
+                        <th scope="col">Nama Kartu Keluarga</th>
+                        <th scope="col">Kepala Keluarga</th>
                         <th scope="col">Action</th>
                       </tr>
                     </thead>
@@ -93,73 +61,11 @@
                     {% for dt in data %}
                       <tr>
                         <th scope="row">{{loop.index}}</th>
-                        <td>{{dt.nama}}</td>
-                        <td>{{dt.tl}}</td>
-                        <td>{{dt.tgl_lahir}}</td>
-                        <td>{{dt.status}}</td>
-                        <td>{{dt.profesi}}</td>
-                        <td>{{dt.alamat}}</td>
+                        <td>{{dt.no_kk}}</td>
+                        <td>{{dt.nama_kk}}</td>
+                        <td>{{dt.kepala_keluarga}}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
-                            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Edit User</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <form class="row g-3 needs-validation" action="/editdaftar/{{dt.id}}" id="#editDaftar" method="POST">
-                                            <div class="col-md-4">
-                                              <label for="validationCustom01" class="form-label">Nama</label>
-                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" required>
-                                            </div>
-                                            <div class="col-md-4">
-                                              <label for="validationCustom02" class="form-label">Tempat Lahir</label>
-                                              <input type="text" class="form-control" id="validationCustom02" name="tl" value="{{dt.tl}}" required>
-                                            </div>
-                                            <div class="col-md-4">
-                                              <label for="validationCustomUsername" class="form-label">Tanggal Lahir</label>
-                                              <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="date" class="form-control" id="validationCustomUsername" name="tgl_lahir" value="{{dt.tgl_lahir}}" aria-describedby="inputGroupPrepend" required>
-                                              </div>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="validationCustom04" class="form-label">Jenis Kelamin</label>
-                                                <select class="form-select" id="validationCustom04" name="jk" value="{{dt.jk}}" required>
-                                                  <option selected disabled value="">Pilih...</option>
-                                                  <option value="Laki-laki">Laki-laki</option>
-                                                  <option value="Perempuan">Perempuan</option>
-                                                </select>
-                                              </div>
-                                              <div class="col-md-4">
-                                                <label for="validationCustom04" class="form-label">Status Pernikahan</label>
-                                                <select class="form-select" name="status" id="validationCustom04" value="{{dt.status}}" required>
-                                                  <option selected disabled value="">Pilih...</option>
-                                                  <option value="Belum Menikah">Belum Menikah</option>
-                                                  <option value="Sudah Menikah">Sudah Menikah</option>
-                                                  <option value="Bercerai">Bercerai</option>
-                                                </select>
-                                              </div>
-                                            <div class="col-md-4">
-                                              <label for="validationCustom05" class="form-label">Profesi</label>
-                                              <input type="text" class="form-control" name="profesi" value="{{dt.profesi}}" id="validationCustom05" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="message-text" class="col-form-label">Alamat</label>
-                                                <textarea class="form-control" id="message-text" name="alamat">{{dt.alamat}}</textarea>
-                                            </div>
-                                            <input type="hidden" name="keterangan" value="Diproses">
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Send message</button>
-                                    </div>
-                                    </form>
-                                    </div>
-                                </div>
-                                </div>
+                            
                         </td>
                       </tr>
                     {% endfor %}
@@ -173,7 +79,7 @@
   {% block tail %}
     <script>
         document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector("#tbDaftar").onsubmit = async (e) => {
+            document.querySelector("#tbKK").onsubmit = async (e) => {
                 e.preventDefault();
                 const req = new XMLHttpRequest();
                 req.onload = () => {
@@ -185,30 +91,9 @@
                         alert("Ada masalah");
                     }
                 }
-                const form = document.querySelector("#tbDaftar");
+                const form = document.querySelector("#tbKK");
                 const datanya = new FormData(form);
-                await req.open("POST", "/tambahdaftar", true);
-                req.send(datanya);
-            }
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            document.querySelector("#editDaftar").onsubmit = async (e) => {
-                e.preventDefault();
-                const req = new XMLHttpRequest();
-                req.onload = () => {
-                    const data = JSON.parse(req.responseText);
-                    if(data.success) {
-                        alert("Data berhasil diubah!")
-                        location.reload();
-                    } else {
-                        alert("Ada masalah");
-                    }
-                }
-                const form = document.querySelector("#editDaftar");
-                const datanya = new FormData(form);
-                const nilai = document.querySelector("#editDftr").value;
-                await req.open("POST", `/editdokter/${nilai}`, true);
+                await req.open("POST", "/tambah_kk", true);
                 req.send(datanya);
             }
         });
