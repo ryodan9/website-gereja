@@ -1,0 +1,108 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Kelola Pendaftaran</h1>   
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h5 class="card-header">Table Pasien</h5>
+            <div class="card-body">
+                <table class="table table-bordered table-sm" id="myTable">
+                    <thead class="table table-dark">
+                      <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Nama Lengkap</th>
+                        <th scope="col">Nama Baptis (Santa/Santo)</th>
+                        <th scope="col">Tempat Lahir</th>
+                        <th scope="col">Tanggal Lahir</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for dt in data %}
+                      <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td>{{dt.nama}}</td>
+                        <td>{{dt.tl}}</td>
+                        <td>{{dt.tgl_lahir}}</td>
+                        <td>{{dt.status}}</td>
+                        <td>{{dt.profesi}}</td>
+                        <td>{{dt.alamat}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row g-3 needs-validation">
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nama Lengkap</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nama Baptis</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Tempat Lahir</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Tanggal Lahir</label>
+                                              <input type="date" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nama Ayah</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nama Ibu</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nama Wali/Saksi Baptis</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nomor Kartu Keluarga Gereja</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="message-text" class="col-form-label">Alamat</label>
+                                                <textarea class="form-control" id="message-text" name="keluhan" required></textarea>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom01" class="form-label">Nomor Telepon</label>
+                                              <input type="tel" pattern="^\d{4}-\d{4}-\d{4}$" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" readonly>
+                                            </div>
+                                            <!-- <input type="hidden" name="user_id" value="{{session.id}}"> -->
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Setuju</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                    </div>
+                                </div>
+                                </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+  </main>
+
+
+{% endblock %}
