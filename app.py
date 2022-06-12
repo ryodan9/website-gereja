@@ -21,7 +21,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://root@localhost/dbgereja'
 app.config['SQLALCHEMY_TRACK_MODIFICATION'] = True
 
 db = SQLAlchemy(app)
-# migrate = Migrate(app, db)
+migrate = Migrate(app, db)
 bcrypt = Bcrypt(app)
 bootstrap = Bootstrap(app)
 
@@ -38,8 +38,8 @@ class User(db.Model):
     username = db.Column(db.String(50))
     password = db.Column(db.Text)
     role = db.Column(db.String(10))
-    usernya = db.relationship('Profil', backref=db.backref('user'), lazy=True)
-    userbaptis = db.relationship('Pendaftaranbaptis', backref=db.backref('user'), lazy=True)
+    usernya = db.relationship('Profil', backref=db.backref('user', lazy=True))
+    userbaptis = db.relationship('Pendaftaranbaptis', backref=db.backref('user', lazy=True))
 
     def __init__(self, username, password, role):
         self.username = username
@@ -53,7 +53,7 @@ class Kartukeluarga(db.Model):
     no_kk = db.Column(db.String(50))
     nama_kk = db.Column(db.String(50))
     kepala_keluarga = db.Column(db.String(50))
-    kkprofil = db.relationship('Profil', backref=db.backref('kartukeluarga'), lazy=True)
+    kkprofil = db.relationship('Profil', backref=db.backref('kartukeluarga', lazy=True))
 
     def __init__(self, no_kk, nama_kk, kepala_keluarga):
         self.no_kk = no_kk
@@ -209,6 +209,58 @@ def tambah_kk():
         db.session.add(Kartukeluarga(no_kk, nama_kk, kepala_keluarga))
         db.session.commit()
         return redirect(request.referrer)
+
+@app.route('/edit_kk/<id>', methods=['GET', 'POST'])
+@login_dulu
+def edit_kk(id):
+    data = Kartukeluarga.query.filter_by(id=id). first()
+    if request.method == "POST":
+        data.no_kk = request.form['no_kk']
+        data.nama_kk = request.form['nama_kk']
+        data.kepala_keluarga = request.form['kepala_keluarga']
+        db.session.add(data)
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman Kelola Umat
+@app.route('/kelola_umat')
+@login_dulu
+def kelola_umat():
+    data = Profil.query.all()
+    data1 = User.query.all()
+    data2 = Kartukeluarga.query.all()
+    return render_template('admin/kelola_umat.html', data=data, data1=data1, data2=data2)
+
+@app.route('/tambah_umat', methods=['GET', 'POST'])
+@login_dulu
+def tambah_umat():
+    if request.method == "POST":
+        nama = request.form['nama']
+        alamat = request.form['alamat']
+        telepon = request.form['telepon']
+        wilayah = request.form['wilayah']
+        lingkungan = request.form['lingkungan']
+        jeniskelamin = request.form['jeniskelamin']
+        hub = request.form['hub']
+        tempat_lahir = request.form['tempat_lahir']
+        tgl_lahir = request.form['tgl_lahir']
+        tempat_baptis = request.form['tempat_baptis']
+        tempat_kopertama = request.form['tempat_kopertama']
+        gereja_kopertama = request.form['gereja_kopertama']
+        tgl_kopertama = request.form['tgl_kopertama']
+        tempat_penguatan = request.form['tempat_penguatan']
+        gereja_penguatan = request.form['gereja_penguatan']
+        tgl_penguatan = request.form['tgl_penguatan']
+        tempat_menikah = request.form['tempat_menikah']
+        gereja_menikah = request.form['gereja_menikah']
+        tgl_menikah = request.form['tgl_menikah']
+        pekerjaan = request.form['pekerjaan']
+        user_id = request.form['user_id']
+        kartukeluarga_id = request.form['kartukeluarga_id']
+        db.session.add(Profil(nama, alamat, telepon, wilayah, lingkungan, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, user_id, kartukeluarga_id))
+        db.session.commit()
+        return redirect(request.referrer)
+
 # Halaman Umat Baptis Bayi
 # @app.route('/baptisbayi')
 

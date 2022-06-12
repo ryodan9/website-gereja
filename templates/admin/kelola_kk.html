@@ -65,7 +65,40 @@
                         <td>{{dt.nama_kk}}</td>
                         <td>{{dt.kepala_keluarga}}</td>
                         <td>
-                            
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Kartu Keluarga</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row g-3 needs-validation" action="/edit_kk/{{dt.id}}" id="#editKK" method="POST">
+                                            <div class="col-mb-3">
+                                              <label for="validationCustom01" class="form-label">No Kartu Keluarga</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="no_kk" value="{{dt.no_kk}}" required>
+                                            </div>
+                                            <div class="col-mb-3">
+                                              <label for="validationCustom02" class="form-label">Nama Kartu Keluarga</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="nama_kk" value="{{dt.nama_kk}}" required>
+                                            </div>
+                                            <div class="col-mb-3">
+                                              <label for="validationCustomUsername" class="form-label">Kepala Keluarga</label>
+                                              <div class="input-group has-validation">
+                                                <input type="text" class="form-control" id="validationCustomUsername" name="kepala_keluarga" value="{{dt.kepala_keluarga}}" aria-describedby="inputGroupPrepend" required>
+                                              </div>
+                                            </div>
+                                    <!-- </div> -->
+                                    <div class="modal-footer">
+                                        <input type="hidden" value="{{dt.id}}" id="eKK">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Ubah</button>
+                                    </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
                         </td>
                       </tr>
                     {% endfor %}
@@ -94,6 +127,27 @@
                 const form = document.querySelector("#tbKK");
                 const datanya = new FormData(form);
                 await req.open("POST", "/tambah_kk", true);
+                req.send(datanya);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("#editKK").onsubmit = async (e) => {
+                e.preventDefault();
+                const req = new XMLHttpRequest();
+                req.onload = () => {
+                    const data = JSON.parse(req.responseText);
+                    if(data.success) {
+                        alert("Data berhasil diubah!")
+                        location.reload();
+                    } else {
+                        alert("Ada masalah");
+                    }
+                }
+                const form = document.querySelector("#editKK");
+                const datanya = new FormData(form);
+                const nilai = document.querySelector("#eKK").value;
+                await req.open("POST", `/edit_kk/${nilai}`, true);
                 req.send(datanya);
             }
         });

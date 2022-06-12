@@ -4,7 +4,7 @@
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">Kelola Kartu Keluarga</h1>   
+      <h1 class="h2">Kelola Umat</h1>   
     </div>
 
     <div class="container">
@@ -14,44 +14,148 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Pendaftaran Baru</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Profil Umat Baru</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form class="row g-3 needs-validation" action="{{url_for('tambah_kk')}}" id="#tbKK" method="POST">
+                <form class="row g-3 needs-validation" action="{{url_for('tambah_umat')}}" id="#tbUmat" method="POST">
                     <div class="col-mb-3">
-                      <label for="validationCustom01" class="form-label">No Kartu Keluarga</label>
-                      <input type="text" class="form-control" id="validationCustom01" name="no_kk" required>
+                      <label for="validationCustom02" class="form-label">Nama</label>
+                      <input type="text" class="form-control" id="validationCustom02" name="nama" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="message-text" class="col-form-label">Alamat</label>
+                        <textarea class="form-control" id="message-text" name="alamat"></textarea>
                     </div>
                     <div class="col-mb-3">
-                      <label for="validationCustom02" class="form-label">Nama Kartu Keluarga</label>
-                      <input type="text" class="form-control" id="validationCustom02" name="nama_kk" required>
+                        <label for="validationCustom02" class="form-label">Telepon</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="telepon" required>
                     </div>
-                    <div class="col-mb-3">
-                      <label for="validationCustomUsername" class="form-label">Kepala Keluarga</label>
-                      <div class="input-group has-validation">
-                        <input type="text" class="form-control" id="validationCustomUsername" name="kepala_keluarga" aria-describedby="inputGroupPrepend" required>
+                    <div class="col-md-4">
+                        <label for="validationCustom04" class="form-label">Wilayah</label>
+                        <select class="form-select" id="validationCustom04" name="wilayah" required>
+                          <option selected disabled value="">Pilih...</option>
+                          <option value="Laki-laki">Wilayah 1</option>
+                          <option value="Perempuan">Wilayah 2</option>
+                        </select>
                       </div>
+                      <div class="col-md-4">
+                        <label for="validationCustom04" class="form-label">Lingkungan</label>
+                        <select class="form-select" id="validationCustom04" name="lingkungan" required>
+                          <option selected disabled value="">Pilih...</option>
+                          <option value="Laki-laki">Lingkungan 1</option>
+                          <option value="Perempuan">Lingkungan 2</option>
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="validationCustom04" class="form-label">Jenis Kelamin</label>
+                        <select class="form-select" id="validationCustom04" name="jeniskelamin" required>
+                          <option selected disabled value="">Pilih...</option>
+                          <option value="Laki-laki">Laki-laki</option>
+                          <option value="Perempuan">Perempuan</option>
+                        </select>
+                      </div>
+                      <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Hubungan dengan Kepala Keluarga</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="hub" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tempat Lahir</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="tempat_lahir" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tanggal Lahir</label>
+                        <input type="date" class="form-control" id="validationCustom02" name="tgl_lahir" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tempat Baptis</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="tempat_baptis" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tanggal Baptis</label>
+                        <input type="date" class="form-control" id="validationCustom02" name="tgl_baptis" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tempat Komuni Pertama</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="tempat_kopertama" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Gereja Komuni Pertama</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="gereja_kopertama" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tanggal Komuni Pertama</label>
+                        <input type="date" class="form-control" id="validationCustom02" name="tgl_kopertama" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tempat Penguatan</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="tempat_penguatan" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Gereja Penguatan</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="gereja_penguatan" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tanggal Penguatan</label>
+                        <input type="date" class="form-control" id="validationCustom02" name="tgl_penguatan" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tempat Menikah</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="tempat_menikah" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Gereja Menikah</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="gereja_menikah" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Tanggal Menikah</label>
+                        <input type="date" class="form-control" id="validationCustom02" name="tgl_menikah" required>
+                    </div>
+                    <div class="col-mb-3">
+                        <label for="validationCustom02" class="form-label">Pekerjaan</label>
+                        <input type="text" class="form-control" id="validationCustom02" name="pekerjaan" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="validationCustom04" class="form-label">Profile Untuk</label>
+                        <select class="form-select" id="validationCustom04" name="user_id" required>
+                          <option selected disabled value="">Pilih...</option>
+                          {% for dt1 in data1 %}
+                          <option value="{{dt1.id}}">{{dt1.username}}</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <div class="col-md-4">
+                        <label for="validationCustom04" class="form-label">No Kartu Keluarga</label>
+                        <select class="form-select" id="validationCustom04" name="kartukeluarga_id" required>
+                          <option selected disabled value="">Pilih...</option>
+                          {% for dt2 in data2 %}
+                          <option value="{{dt2.id}}">{{dt2.no_kk}}::Kepala Keluarga({{dt2.kepala_keluarga}})</option>
+                          {% endfor %}
+                        </select>
+                      </div>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary">Tambah</button>
                     </div>
                     <!-- <input type="hidden" name="keterangan" value="Diproses"> -->
             </div>
-            <div class="modal-footer">
+            <!-- <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <button type="submit" class="btn btn-primary">Tambah</button>
-            </div>
+            </div> -->
             </form>
             </div>
         </div>
         </div>
         <br><br>
         <div class="card">
-            <h5 class="card-header">Table Kartu Keluarga</h5>
+            <h5 class="card-header">Table Umat</h5>
             <div class="card-body">
                 <table class="table table-bordered table-sm" id="myTable">
                     <thead class="table table-dark">
                       <tr>
                         <th scope="col">No.</th>
                         <th scope="col">No Kartu Keluarga</th>
+                        <th scope="col">Nama</th>
                         <th scope="col">Nama Kartu Keluarga</th>
                         <th scope="col">Kepala Keluarga</th>
                         <th scope="col">Action</th>
@@ -61,9 +165,10 @@
                     {% for dt in data %}
                       <tr>
                         <th scope="row">{{loop.index}}</th>
-                        <td>{{dt.no_kk}}</td>
-                        <td>{{dt.nama_kk}}</td>
-                        <td>{{dt.kepala_keluarga}}</td>
+                        <td>{{dt.kartukeluarga.no_kk}}</td>
+                        <td>{{dt.nama}}</td>
+                        <td>{{dt.kartukeluarga.nama_kk}}</td>
+                        <td>{{dt.kartukeluarga.kepala_keluarga}}</td>
                         <td>
                             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
                             <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -76,50 +181,24 @@
                                     <div class="modal-body">
                                         <form class="row g-3 needs-validation" action="/edit_kk/{{dt.id}}" id="#editKK" method="POST">
                                             <div class="col-md-4">
-                                              <label for="validationCustom01" class="form-label">Nama</label>
-                                              <input type="text" class="form-control" id="validationCustom01" name="nama" value="{{dt.nama}}" required>
+                                              <label for="validationCustom01" class="form-label">No Kartu Keluarga</label>
+                                              <input type="text" class="form-control" id="validationCustom01" name="no_kk" value="{{dt.no_kk}}" required>
                                             </div>
                                             <div class="col-md-4">
-                                              <label for="validationCustom02" class="form-label">Tempat Lahir</label>
-                                              <input type="text" class="form-control" id="validationCustom02" name="tl" value="{{dt.tl}}" required>
+                                              <label for="validationCustom02" class="form-label">Nama Kartu Keluarga</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="nama_kk" value="{{dt.nama_kk}}" required>
                                             </div>
                                             <div class="col-md-4">
-                                              <label for="validationCustomUsername" class="form-label">Tanggal Lahir</label>
+                                              <label for="validationCustomUsername" class="form-label">Kepala Keluarga</label>
                                               <div class="input-group has-validation">
-                                                <span class="input-group-text" id="inputGroupPrepend">@</span>
-                                                <input type="date" class="form-control" id="validationCustomUsername" name="tgl_lahir" value="{{dt.tgl_lahir}}" aria-describedby="inputGroupPrepend" required>
+                                                <input type="text" class="form-control" id="validationCustomUsername" name="kepala_keluarga" value="{{dt.kepala_keluarga}}" aria-describedby="inputGroupPrepend" required>
                                               </div>
                                             </div>
-                                            <div class="col-md-4">
-                                                <label for="validationCustom04" class="form-label">Jenis Kelamin</label>
-                                                <select class="form-select" id="validationCustom04" name="jk" value="{{dt.jk}}" required>
-                                                  <option selected disabled value="">Pilih...</option>
-                                                  <option value="Laki-laki">Laki-laki</option>
-                                                  <option value="Perempuan">Perempuan</option>
-                                                </select>
-                                              </div>
-                                              <div class="col-md-4">
-                                                <label for="validationCustom04" class="form-label">Status Pernikahan</label>
-                                                <select class="form-select" name="status" id="validationCustom04" value="{{dt.status}}" required>
-                                                  <option selected disabled value="">Pilih...</option>
-                                                  <option value="Belum Menikah">Belum Menikah</option>
-                                                  <option value="Sudah Menikah">Sudah Menikah</option>
-                                                  <option value="Bercerai">Bercerai</option>
-                                                </select>
-                                              </div>
-                                            <div class="col-md-4">
-                                              <label for="validationCustom05" class="form-label">Profesi</label>
-                                              <input type="text" class="form-control" name="profesi" value="{{dt.profesi}}" id="validationCustom05" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="message-text" class="col-form-label">Alamat</label>
-                                                <textarea class="form-control" id="message-text" name="alamat">{{dt.alamat}}</textarea>
-                                            </div>
-                                            <input type="hidden" name="keterangan" value="Diproses">
                                     </div>
                                     <div class="modal-footer">
+                                        <input type="hidden" value="{{dt.id}}" id="eKK">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Send message</button>
+                                        <button type="submit" class="btn btn-primary">Ubah</button>
                                     </div>
                                     </form>
                                     </div>
@@ -153,6 +232,27 @@
                 const form = document.querySelector("#tbKK");
                 const datanya = new FormData(form);
                 await req.open("POST", "/tambah_kk", true);
+                req.send(datanya);
+            }
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("#editKK").onsubmit = async (e) => {
+                e.preventDefault();
+                const req = new XMLHttpRequest();
+                req.onload = () => {
+                    const data = JSON.parse(req.responseText);
+                    if(data.success) {
+                        alert("Data berhasil diubah!")
+                        location.reload();
+                    } else {
+                        alert("Ada masalah");
+                    }
+                }
+                const form = document.querySelector("#editKK");
+                const datanya = new FormData(form);
+                const nilai = document.querySelector("#eKK").value;
+                await req.open("POST", `/edit_kk/${nilai}`, true);
                 req.send(datanya);
             }
         });
