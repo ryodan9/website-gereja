@@ -3,8 +3,185 @@
 {% block body %}
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">Dashboard</h1>   
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h4>Selamat Datang, {{session.nama}}!</h4>
+  </div>
+    <div class="profilcard">
+      <h5>Profil</h5>
+      <!-- <a href="" class="nav-item btn btn-primary editprofil"><span>Edit Profil</span></a>  btn btn-sm btn-primary  -->
+      <button class="nav-item btn btn-primary editprofil" data-bs-toggle="modal" data-bs-target="#exampleModal1{{session.id}}" data-bs-whatever="@mdo"><b>Edit Profil</b></button>
+                            <div class="modal fade" id="exampleModal1{{session.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Edit Profil</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form class="row g-3 needs-validation" action="/edit_user/{{session.id}}" id="editProfil" method="POST">
+                                          <!-- <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Username:</label>
+                                            <input type="text" class="form-control" name="username" id="recipient-name" value="{{session.username}}">
+                                        </div> -->
+                                        <input type="hidden" name="username" value="{{session.username}}">
+                                        <!-- <div class="mb-3">
+                                            <label for="recipient-name" class="col-form-label">Password:</label>
+                                            <input type="password" class="form-control" name="password" id="recipient-name">
+                                        </div> -->
+                                        <input type="hidden" name="password" value="{{session.password}}">
+                                        <input type="hidden" name="role" value="Umat">
+                                        <div class="col-mb-3">
+                                            <label for="validationCustom02" class="form-label">Nama</label>
+                                            <input type="text" class="form-control" id="validationCustom02" name="nama" value="{{session.nama}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="message-text" class="col-form-label">Alamat</label>
+                                              <textarea class="form-control" id="message-text" name="alamat">{{session.alamat}}</textarea>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Telepon</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="telepon" value="{{session.telepon}}" required>
+                                          </div>
+                                          <div class="row">
+                                          <div class="col-md-6">
+                                              <label for="validationCustom04" class="form-label">Wilayah</label>
+                                              <select class="form-select" id="validationCustom04" name="wilayah" required>
+                                                <option value="{{session.wilayah}}">{{session.wilayah}}</option>
+                                                <!-- <option value="Wilayah 1">Wilayah 1</option>
+                                                <option value="Wilayah 2">Wilayah 2</option> -->
+                                              </select>
+                                            </div>
+                                            <div class="col-md-6 mb-3">
+                                              <label for="validationCustom04" class="form-label">Lingkungan</label>
+                                              <select class="form-select" id="validationCustom04" name="lingkungan" required>
+                                                <option value="{{session.lingkungan}}">{{session.lingkungan}}</option>
+                                                <!-- <option value="Lingkungan 1">Lingkungan 1</option>
+                                                <option value="Lingkungan 2">Lingkungan 2</option> -->
+                                              </select>
+                                            </div>
+                                        </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom04" class="form-label">Jenis Kelamin</label>
+                                              <select class="form-select" id="validationCustom04" name="jeniskelamin" required>
+                                                <option value="{{session.jeniskelamin}}">{{session.jeniskelamin}}</option>
+                                                <!-- <option value="Laki-laki">Laki-laki</option>
+                                                <option value="Perempuan">Perempuan</option> -->
+                                              </select>
+                                            </div>
+                                            <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Hubungan dengan Kepala Keluarga</label>
+                                              <input type="text" class="form-control" id="validationCustom02" value="{{session.hub}}" name="hub" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tempat Lahir</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="tempat_lahir" value="{{session.tempat_lahir}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tanggal Lahir</label>
+                                              <input type="date" class="form-control" id="validationCustom02" name="tgl_lahir" value="{{session.tgl_lahir}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tempat Baptis</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="tempat_baptis" value="{{session.tempat_baptis}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tanggal Baptis</label>
+                                              <input type="date" class="form-control" id="validationCustom02" name="tgl_baptis" value="{{session.tgl_baptis}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tempat Komuni Pertama</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="tempat_kopertama" value="{{session.tempat_kopertama}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Gereja Komuni Pertama</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="gereja_kopertama" value="{{session.gereja_kopertama}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tanggal Komuni Pertama</label>
+                                              <input type="date" class="form-control" id="validationCustom02" name="tgl_kopertama" value="{{session.tgl_kopertama}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tempat Penguatan</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="tempat_penguatan" value="{{session.tempat_penguatan}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Gereja Penguatan</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="gereja_penguatan" value="{{session.gereja_penguatan}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tanggal Penguatan</label>
+                                              <input type="date" class="form-control" id="validationCustom02" name="tgl_penguatan" value="{{session.tgl_penguatan}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tempat Menikah</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="tempat_menikah" value="{{session.tempat_menikah}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Gereja Menikah</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="gereja_menikah" value="{{session.gereja_menikah}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Tanggal Menikah</label>
+                                              <input type="date" class="form-control" id="validationCustom02" name="tgl_menikah" value="{{session.tgl_menikah}}" readonly>
+                                          </div>
+                                          <div class="mb-3">
+                                              <label for="validationCustom02" class="form-label">Pekerjaan</label>
+                                              <input type="text" class="form-control" id="validationCustom02" name="pekerjaan" value="{{session.pekerjaan}}" required>
+                                          </div>
+                                          <div class="col-md-4">
+                                            <label for="validationCustom04" class="form-label">No Kartu Keluarga</label>
+                                            <select class="form-select" id="validationCustom04" name="no_kk" required>
+                                              <option value="{{session.no_kk}}">{{session.no_kk}}</option>
+                                            </select>
+                                          </div>
+                                    <!-- </div> -->
+                                    <div class="modal-footer">
+                                        <input type="hidden" value="{{session.id}}" id="eProfil">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Ubah</button>
+                                    </div>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
+      </div>
+    <p class="pprofil"><img src="https://static.xx.fbcdn.net/rsrc.php/v3/y9/r/UVVcQkIIebV.png?_nc_eui2=AeFOWnIQlqIZqlZBgeOaYUShAjmVqBrVrxMCOZWoGtWvE7X3vTRhk9TaAbiZyheYJQhzP8tpFA6vAnJvr9XJ3heo" style="float:left; margin-right:20px;" alt="Alamat" class="phprofil">Alamat di <span>{{session.alamat}}</span>
+    </p>
+    <p class="pprofil">
+      <img src="static/image/telepon.png" style="float:left; margin-right:20px;" alt="Telepon" class="phprofil">Nomor <span>{{session.telepon}}</span>
+    </p>
+    <p class="pprofil">
+      <img src="static/image/wilayah.png" style="float:left ; margin-right:20px" alt="Wilayah" class="phprofil">Wilayah <span>{{session.wilayah}}</span> Lingkungan <span>{{session.lingkungan}}</span>
+    </p>
+    <p class="pprofil">
+      <img src="static/image/jeniskelamin.png" style="float:left ; margin-right:20px; width: 35px; margin-left: -8px;" alt="JenisKelamin" class="phprofil"><span style="margin-left:-8px ;">{{session.jeniskelamin}}</span>
+    </p>
     </div>
+  </div>
+</main>
 
+{% block tail %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("#editProfil").onsubmit = async (e) => {
+                e.preventDefault();
+                const req = new XMLHttpRequest();
+                req.onload = () => {
+                    const data = JSON.parse(req.responseText);
+                    if(data.success) {
+                        alert("Data berhasil diubah!")
+                        location.reload();
+                    } else {
+                        alert("Ada masalah");
+                    }
+                }
+                const form = document.querySelector("#editProfil");
+                const datanya = new FormData(form);
+                const nilai = document.querySelector("#eProfil").value;
+                await req.open("POST", `/edit_user/${nilai}`, true);
+                req.send(datanya);
+            }
+        });
+  </script>
+{% endblock %}
 {% endblock %}

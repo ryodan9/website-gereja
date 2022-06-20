@@ -65,8 +65,8 @@
                         <td>{{dt.nama_kk}}</td>
                         <td>{{dt.kepala_keluarga}}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
-                            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.no_kk}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <div class="modal fade" id="exampleModal1{{dt.no_kk}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
                                     <div class="modal-header">
@@ -74,7 +74,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form class="row g-3 needs-validation" action="/edit_kk/{{dt.id}}" id="#editKK" method="POST">
+                                        <form class="row g-3 needs-validation" action="/edit_kk/{{dt.no_kk}}" id="editKK" method="POST">
                                             <div class="col-mb-3">
                                               <label for="validationCustom01" class="form-label">No Kartu Keluarga</label>
                                               <input type="text" class="form-control" id="validationCustom01" name="no_kk" value="{{dt.no_kk}}" required>
@@ -91,7 +91,7 @@
                                             </div>
                                     <!-- </div> -->
                                     <div class="modal-footer">
-                                        <input type="hidden" value="{{dt.id}}" id="eKK">
+                                        <input type="hidden" value="{{dt.no_kk}}" id="eKK">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                         <button type="submit" class="btn btn-primary">Ubah</button>
                                     </div>

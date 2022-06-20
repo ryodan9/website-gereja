@@ -2,6 +2,7 @@
     <div class="row">
   <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3">
+        {% if session.role == "Admin" %}
         <ul class="nav flex-column">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" href="/dashboard">
@@ -10,7 +11,7 @@
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="/">
+            <a class="nav-link" href="/admbaptisbayi">
               <span data-feather="file"></span>
               Baptis Bayi
             </a>
@@ -76,5 +77,57 @@
                   </a>
                 </li>
               </ul>
+              {% elif session.role == "Umat" %}
+              <ul class="nav flex-column">
+                <li class="nav-item">
+                  <a class="nav-link active" aria-current="page" href="/dashboard">
+                    <span data-feather="home"></span>
+                    Dashboard
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/baptisbayi">
+                    <span data-feather="file"></span>
+                    Baptis Bayi
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/">
+                    <span data-feather="shopping-cart"></span>
+                    Baptis Dewasa
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/">
+                    <span data-feather="users"></span>
+                    Perkawinan
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/suplier">
+                    <span data-feather="bar-chart-2"></span>
+                    Ibadat
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/kelola_user">
+                    <span data-feather="user"></span>
+                    Misa
+                  </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/kelola_user">
+                        <span data-feather="user"></span>
+                        Komuni Pertama
+                      </a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="/kelola_user">
+                        <span data-feather="user"></span>
+                        Pengantar Lingkunagan
+                      </a>
+                  </li>
+                    </ul>
+                    {% endif %}
       </div>
     </nav>
