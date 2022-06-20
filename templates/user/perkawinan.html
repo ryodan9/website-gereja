@@ -1,0 +1,193 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2 judulform">FORMULIR SAKRAMEN PERKAWINAN</h1>   
+    </div>
+    <br>
+    <h5>Pihak Pria</h5>
+    <br>
+    <form action="{{url_for('daftarbaptisbayi')}}" method="POST">
+        <div class="mb-3">
+          <label for="namalengkap" class="form-label">Nama Lengkap :</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_lk" required>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Tempat Lahir :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="tempat_lahir_lk" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Tanggal Lahir :</label>
+            <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_lahir_lk" required>
+        </div>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Agama :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="agama_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Tanggal Baptis, Gereja, Kota :</label>
+            <textarea class="form-control" id="message-text" name="ket_baptis_lk" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Surat Baptis :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="no_baptis_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Tanggal Krisma, Gereja, Baptis :</label>
+            <textarea class="form-control" id="message-text" name="ket_krisma_lk" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Registrasi Keluarga :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="no_regiskeluarga_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Ayah :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ayah_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Ibu :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ibu_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Status Pekerjaan Calon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="pekerjaan_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Lingkungan/Wilayah, Paroki :</label>
+            <textarea class="form-control" id="message-text" name="ket_paroki_lk" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Alamat :</label>
+            <textarea class="form-control" id="message-text" name="alamat_lk" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Telepon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="telepon_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Saksi :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_saksi_lk" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Dispensasi :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="dispensasi_lk" required>
+        </div>
+        <br>
+        <h5>Pihak Wanita</h5>
+    <br>
+    <form action="{{url_for('daftarbaptisbayi')}}" method="POST">
+        <div class="mb-3">
+          <label for="namalengkap" class="form-label">Nama Lengkap :</label>
+          <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_pr" required>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Tempat Lahir :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="tempat_lahir_pr" required>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Tanggal Lahir :</label>
+            <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_lahir_pr" required>
+        </div>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Agama :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="agama_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Tanggal Baptis, Gereja, Kota :</label>
+            <textarea class="form-control" id="message-text" name="ket_baptis_pr" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Surat Baptis :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="no_baptis_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Tanggal Krisma, Gereja, Baptis :</label>
+            <textarea class="form-control" id="message-text" name="ket_krisma_pr" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Registrasi Keluarga :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="no_regiskeluarga_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Ayah :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ayah_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Ibu :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ibu_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Status Pekerjaan Calon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="pekerjaan_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Lingkungan/Wilayah, Paroki :</label>
+            <textarea class="form-control" id="message-text" name="ket_paroki_pr" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Alamat :</label>
+            <textarea class="form-control" id="message-text" name="alamat_pr" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Telepon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="telepon_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Saksi :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama_saksi_pr" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Dispensasi :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="dispensasi_pr" required>
+        </div>
+        <br>
+        <h5>Pernikahan</h5>
+        
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Alamat Baru :</label>
+            <textarea class="form-control" id="message-text" name="alamat_baru" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Mohon Diumumkan Tanggal :</label>
+            <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_mohon" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Rencana Pernikahan Tanggal :</label>
+            <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_nikah" required>
+        </div>
+        <div class="mb-3">
+            <label for="validationCustom02" class="form-label">Di Gereja :</label>
+            <input type="text" class="form-control" id="validationCustom02" name="gereja" required>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Alamat Gereja :</label>
+            <textarea class="form-control" id="message-text" name="alamat_gereja" required></textarea>
+        </div>
+        <input type="hidden" name="user_id" value="{{session.id}}">
+        <input type="hidden" name="keterengan" value="Menunggu Konfirmasi">
+        <button type="submit" class="btn btn-primary">Daftar</button>
+      </form>
+
+      <br><br><br>
+      <div class="note">
+        <h6>Note :</h6>
+        <ul>
+            <li>Surat baptis terbaru (berlaku 8 bulan).</li>
+            <li>Surat Kenal Warga dari Ketua KUB dan Wilayah.</li>
+            <li>Sertifikat hasil kursus persiapan perkawinan (KPP).</li>
+            <li>Pas foto berendeng ukuran 4x6 sebanyak 2 lembar.</li>
+            <li>Bila salah satu calon pasangan non Katolik harus melalui konsultasi terlebih dahulu dengan Pastor.</li>
+            <li>Dianjurkan tidak melangsungkan pernikahan di masa prapaskah dan masa adven.</li>
+            <li>konsultasikan buku teks perkawinan, misdinar, koor dan penggunaan fasilitas gereja.</li>
+            <li>Tidak diperkenankan memastikan pesan tempat pesta jika belum mendapat kepastian dari Pastor.</li>
+            <li>Berkas kanonik harus diserahkan kepada sekretariat.</li>
+        </ul>
+      </div>
+  </main>
+
+
+{% endblock %}

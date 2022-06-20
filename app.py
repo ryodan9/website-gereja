@@ -62,7 +62,8 @@ class User(db.Model):
     pekerjaan = db.Column(db.String(50))
     no_kk = db.Column(db.String(50), db.ForeignKey('kartukeluarga.no_kk'))
     # usernya = db.relationship('Profil', backref=db.backref('user', lazy=True))
-    userbaptis = db.relationship('Pendaftaranbaptis', backref=db.backref('user', lazy=True))
+    userbaptisbayi = db.relationship('Pendaftaranbaptis', backref=db.backref('user', lazy=True))
+    userbaptisdewasa = db.relationship('Baptisdewasa', backref=db.backref('user', lazy=True))
 
     def __init__(self, username, password, role, nama, alamat, telepon, wilayah, lingkungan, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tgl_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, no_kk):
         self.username = username
@@ -105,7 +106,7 @@ class Kartukeluarga(db.Model):
         self.kepala_keluarga = kepala_keluarga
 
 class Pendaftaranbaptis(db.Model):
-    __tablename__ = 'daftarbaptis'
+    __tablename__ = 'daftarbaptisbayi'
     id  = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(50))
     nama_baptis = db.Column(db.String(50))
@@ -133,6 +134,128 @@ class Pendaftaranbaptis(db.Model):
         self.telepon = telepon
         self.user_id = user_id
         self.keterengan = keterengan
+
+class Baptisdewasa(db.Model):
+    __tablename__ = 'daftarbaptisdewasa'
+    id  = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(50))
+    nama_baptis = db.Column(db.String(50))
+    tempat_lahir = db.Column(db.String(100))
+    tgl_lahir = db.Column(db.String(20))
+    agama = db.Column(db.String(20))
+    nama_ayah = db.Column(db.String(50))
+    nama_ibu = db.Column(db.String(50))
+    pasangan = db.Column(db.String(50))
+    tgl_menikah = db.Column(db.String(20))
+    cara_menikah = db.Column(db.String(50))
+    nama_wali = db.Column(db.String(50))
+    no_regiskeluarga = db.Column(db.String(50))
+    alamat = db.Column(db.Text)
+    telepon = db.Column(db.String(15))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    keterangan = db.Column(db.String(20))
+
+    def __init__(self, nama, nama_baptis, tempat_lahir, tgl_lahir, agama, nama_ayah, nama_ibu, pasangan, tgl_menikah, cara_menikah, nama_wali, no_regiskeluarga, alamat, telepon, user_id, keterangan):
+        self.nama = nama
+        self.nama_baptis = nama_baptis
+        self.tempat_lahir = tempat_lahir
+        self.tgl_lahir = tgl_lahir
+        self.agama = agama
+        self.nama_ayah = nama_ayah
+        self.nama_ibu = nama_ibu
+        self.pasangan = pasangan
+        self.tgl_menikah = tgl_menikah
+        self.cara_menikah = cara_menikah
+        self.nama_wali = nama_wali
+        self.no_regiskeluarga = no_regiskeluarga
+        self.alamat = alamat
+        self.telepon = telepon
+        self.user_id = user_id
+        self.keterangan = keterangan
+
+class Perkawinan(db.Model):
+    __tablename__ = "daftarperkawinan"
+    id  = db.Column(db.Integer, primary_key=True)
+    nama_lk = db.Column(db.String(50))
+    tempat_lahir_lk = db.Column(db.String(100))
+    tgl_lahir_lk = db.Column(db.String(20))
+    agama_lk = db.Column(db.String(20))
+    ket_baptis_lk = db.Column(db.String(100))
+    no_baptis_lk = db.Column(db.String(50))
+    ket_krisma_lk = db.Column(db.String(100))
+    no_regiskeluarga_lk = db.Column(db.String(50))
+    nama_ayah_lk = db.Column(db.String(50))
+    nama_ibu_lk = db.Column(db.String(50))
+    pekerjaan_lk = db.Column(db.String(50))
+    ket_paroki_lk = db.Column(db.String(100))
+    alamat_lk = db.Column(db.Text)
+    telepon_lk = db.Column(db.String(15))
+    nama_saksi_lk = db.Column(db.String(50))
+    dispensasi_lk = db.Column(db.String(50))
+    nama_pr = db.Column(db.String(50))
+    tempat_lahir_pr = db.Column(db.String(100))
+    tgl_lahir_pr = db.Column(db.String(20))
+    agama_pr = db.Column(db.String(20))
+    ket_baptis_pr = db.Column(db.String(100))
+    no_baptis_pr = db.Column(db.String(50))
+    ket_krisma_pr = db.Column(db.String(100))
+    no_regiskeluarga_pr = db.Column(db.String(50))
+    nama_ayah_pr = db.Column(db.String(50))
+    nama_ibu_pr = db.Column(db.String(50))
+    pekerjaan_pr = db.Column(db.String(50))
+    ket_paroki_pr = db.Column(db.String(100))
+    alamat_pr = db.Column(db.Text)
+    telepon_pr = db.Column(db.String(15))
+    nama_saksi_pr = db.Column(db.String(50))
+    dispensasi_pr = db.Column(db.String(50))
+    alamat_baru = db.Column(db.Text)
+    tgl_mohon = db.Column(db.String(20))
+    tgl_nikah = db.Column(db.String(20))
+    gereja = db.Column(db.String(50))
+    alamat_gereja = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    keterangan = db.Column(db.String(20))
+
+    def __init__(self, nama_lk, tempat_lahir_lk, tgl_lahir_lk, agama_lk, ket_baptis_lk, no_baptis_lk, ket_krisma_lk, no_regiskeluarga_lk, nama_ayah_lk, nama_ibu_lk, pekerjaan_lk, ket_paroki_lk, alamat_lk, telepon_lk, nama_saksi_lk, dispensasi_lk, nama_pr, tempat_lahir_pr, tgl_lahir_pr, agama_pr, ket_baptis_pr, no_baptis_pr, ket_krisma_pr, no_regiskeluarga_pr, nama_ayah_pr, nama_ibu_pr, pekerjaan_pr, ket_paroki_pr, alamat_pr, telepon_pr, nama_saksi_pr, dispensasi_pr, alamat_baru, tgl_mohon, tgl_nikah, gereja, alamat_gereja, user_id, keterangan):
+        self.nama_lk = nama_lk
+        self.tempat_lahir_lk = tempat_lahir_lk
+        self.tgl_lahir_lk = tgl_lahir_lk
+        self.agama_lk = agama_lk
+        self.ket_baptis_lk = ket_baptis_lk
+        self.no_baptis_lk = no_baptis_lk
+        self.ket_krisma_lk = ket_krisma_lk
+        self.no_regiskeluarga_lk = no_regiskeluarga_lk
+        self.nama_ayah_lk = nama_ayah_lk
+        self.nama_ibu_lk = nama_ibu_lk
+        self.pekerjaan_lk = pekerjaan_lk
+        self.ket_paroki_lk = ket_paroki_lk
+        self.alamat_lk = alamat_lk
+        self.telepon_lk = telepon_lk
+        self.nama_saksi_lk = nama_saksi_lk
+        self.dispensasi_lk = dispensasi_lk
+        self.nama_pr = nama_pr
+        self.tempat_lahir_pr = tempat_lahir_pr
+        self.tgl_lahir_pr = tgl_lahir_pr
+        self.agama_pr = agama_pr
+        self.ket_baptis_pr = ket_baptis_pr
+        self.no_baptis_pr = no_baptis_pr
+        self.ket_krisma_pr = ket_krisma_pr
+        self.no_regiskeluarga_pr = no_regiskeluarga_pr
+        self.nama_ayah_pr = nama_ayah_pr
+        self.nama_ibu_pr = nama_ibu_pr
+        self.pekerjaan_pr = pekerjaan_pr
+        self.ket_paroki_pr = ket_paroki_pr
+        self.alamat_pr = alamat_pr
+        self.telepon_pr = telepon_pr
+        self.nama_saksi_pr = nama_saksi_pr
+        self.dispensasi_pr = dispensasi_pr
+        self.alamat_baru = alamat_baru
+        self.tgl_mohon = tgl_mohon
+        self.tgl_nikah = tgl_nikah
+        self.gereja = gereja
+        self.alamat_gereja = alamat_gereja
+        self.user_id = user_id
+        self.keterangan = keterangan
 
 db.create_all()
 
@@ -198,7 +321,8 @@ def login():
 @login_dulu
 def dashboard():
     data = User.query.filter_by(id=id). first()
-    return render_template('dashboard.html', data=data)
+    data1 = Baptisdewasa.query.filter_by(id=id). all()
+    return render_template('dashboard.html', data=data, data1=data1)
 
 # Halaman Kelola User
 @app.route('/kelola_user')
@@ -313,14 +437,6 @@ def edit_kk(no_kk):
         db.session.commit()
         return redirect(request.referrer)
 
-# Halaman Kelola Umat
-@app.route('/kelola_umat')
-@login_dulu
-def kelola_umat():
-    data1 = User.query.all()
-    data2 = Kartukeluarga.query.all()
-    return render_template('admin/kelola_umat.html', data=data, data1=data1, data2=data2)
-
 # Halaman Umat Baptis Bayi
 # @app.route('/baptisbayi')
 # @login_dulu
@@ -376,6 +492,77 @@ def daftarbaptisbayi():
         db.session.add(Pendaftaranbaptis(nama, nama_baptis, tempat_lahir, tgl_lahir, nama_ayah, nama_ibu, nama_wali, no_kk, alamat, telepon, user_id, keterengan))
         db.session.commit()
         return redirect(request.referrer)
+
+# Halaman Admin Baptis Dewasa
+@app.route('/admbaptisdewasa')
+@login_dulu
+def admbaptisdewasa():
+    data = Baptisdewasa.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
+    return render_template('admin/baptisdewasa.html', data=data)
+
+@app.route('/konfbaptisdewasa/<id>', methods=['GET', 'POST'])
+@login_dulu
+def konfbaptisdewasa(id):
+    data = Baptisdewasa.query.filter_by(id=id). first()
+    if request.method == "POST":
+        data.nama = request.form['nama']
+        data.nama_baptis = request.form['nama_baptis']
+        data.tempat_lahir = request.form['tempat_lahir']
+        data.tgl_lahir = request.form['tgl_lahir']
+        data.agama = request.form['agama']
+        data.nama_ayah = request.form['nama_ayah']
+        data.nama_ibu = request.form['nama_ibu']
+        data.pasangan = request.form['pasangan']
+        data.tgl_menikah = request.form['tgl_menikah']
+        data.cara_menikah = request.form['cara_menikah']
+        data.nama_wali = request.form['nama_wali']
+        data.no_regiskeluarga = request.form['no_regiskeluarga']
+        data.alamat = request.form['alamat']
+        data.telepon = request.form['telepon']
+        data.user_id = request.form['user_id']
+        data.keterangan = request.form['keterangan']
+        db.session.add(data)
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman User Baptis Dewasa
+@app.route('/baptisdewasa')
+@login_dulu
+def baptisdewasa():
+    data = User.query.filter_by(id=id). first()
+    return render_template('user/baptisdewasa.html', data=data)
+
+@app.route('/daftarbaptisdewasa', methods=['GET', 'POST'])
+@login_dulu
+def daftarbaptisdewasa():
+    if request.method == "POST":
+        nama = request.form['nama']
+        nama_baptis = request.form['nama_baptis']
+        tempat_lahir = request.form['tempat_lahir']
+        tgl_lahir = request.form['tgl_lahir']
+        agama = request.form['agama']
+        nama_ayah = request.form['nama_ayah']
+        nama_ibu = request.form['nama_ibu']
+        pasangan = request.form['pasangan']
+        tgl_menikah = request.form['tgl_menikah']
+        cara_menikah = request.form['cara_menikah']
+        nama_wali = request.form['nama_wali']
+        no_regiskeluarga = request.form['no_regiskeluarga']
+        alamat = request.form['alamat']
+        telepon = request.form['telepon']
+        user_id = request.form['user_id']
+        keterangan = request.form['keterangan']
+        db.session.add(Baptisdewasa(nama, nama_baptis, tempat_lahir, tgl_lahir, agama, nama_ayah, nama_ibu, pasangan, tgl_menikah, cara_menikah, nama_wali, no_regiskeluarga, alamat, telepon, user_id, keterangan))
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman Admin Perkawinan
+
+# Halaman User Perkawinan
+@app.route('/perkawinan')
+@login_dulu
+def perkawinan():
+    return render_template('user/perkawinan.html')
 
 @app.route('/logout')
 @login_dulu

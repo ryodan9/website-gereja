@@ -6,6 +6,7 @@
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4>Selamat Datang, {{session.nama}}!</h4>
   </div>
+    
     <div class="profilcard">
       <h5>Profil</h5>
       <!-- <a href="" class="nav-item btn btn-primary editprofil"><span>Edit Profil</span></a>  btn btn-sm btn-primary  -->
@@ -157,6 +158,38 @@
       <img src="static/image/jeniskelamin.png" style="float:left ; margin-right:20px; width: 35px; margin-left: -8px;" alt="JenisKelamin" class="phprofil"><span style="margin-left:-8px ;">{{session.jeniskelamin}}</span>
     </p>
     </div>
+    <br>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h5>Status Pendaftaran</h5>
+    </div>
+    <div class="card">
+      <h5 class="card-header">Table Kartu Keluarga</h5>
+      <div class="card-body">
+          <table class="table table-bordered table-sm" id="myTable">
+              <thead class="table table-dark">
+                <tr>
+                  <th scope="col">No.</th>
+                  <th scope="col">No Kartu Keluarga</th>
+                  <th scope="col">Nama Kartu Keluarga</th>
+                  <th scope="col">Kepala Keluarga</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- {% if data1.user_id == "2" %} -->
+              {% for dt1 in data1 %}
+                <tr>
+                  <th scope="row">{{loop.index}}</th>
+                  <td>{{dt1.nama}}</td>
+                  <td>{{session.id}}</td>
+                  <td>{{session.nama}}</td>
+                </tr>
+              {% endfor %}
+              <!-- {% endif %} -->
+              </tbody>
+            </table>
+      </div>
+  </div>
   </div>
 </main>
 
