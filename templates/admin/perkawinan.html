@@ -1,0 +1,257 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Kelola Pendaftaran Perkawinan</h1>   
+    </div>
+
+    <div class="container">
+        <div class="card">
+            <h5 class="card-header">Menunggu Konfirmasi</h5>
+            <div class="card-body">
+                <table class="table table-bordered table-sm" id="myTable">
+                    <thead class="table table-dark">
+                      <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Nama Pria</th>
+                        <th scope="col">Nama Wanita</th>
+                        <th scope="col">Rencana Pernikahan</th>
+                        <th scope="col">Gereja</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for dt in data %}
+                      <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td>{{dt.nama_lk}}</td>
+                        <td>{{dt.nama_pr}}</td>
+                        <td>{{dt.tgl_nikah}}</td>
+                        <td>{{dt.gereja}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/konfperkawinan/{{dt.id}}" method="POST" class="row g-3 needs-validation">
+                                            <br>
+                                            <h5>Pihak Pria</h5>
+                                            <br>
+                                            <div class="mb-3">
+                                                <label for="namalengkap" class="form-label">Nama Lengkap :</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_lk" value="{{dt.nama_lk}}" readonly>
+                                              <div class="row">
+                                              <div class="col-md-6 mb-3">
+                                                  <label for="namabaptis" class="form-label">Tempat Lahir :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="tempat_lahir_lk" value="{{dt.tempat_lahir_lk}}" readonly>
+                                              </div>
+                                              <div class="col-md-6 mb-3">
+                                                  <label for="namabaptis" class="form-label">Tanggal Lahir :</label>
+                                                  <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_lahir_lk" value="{{dt.tgl_lahir_lk}}" readonly>
+                                              </div>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Agama :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="agama_lk" value="{{dt.agama_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Tanggal Baptis, Gereja, Kota :</label>
+                                                  <textarea class="form-control" id="message-text" name="ket_baptis_lk" readonly>{{dt.ket_baptis_lk}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nomor Surat Baptis :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="no_baptis_lk" value="{{dt.no_baptis_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Tanggal Krisma, Gereja, Baptis :</label>
+                                                  <textarea class="form-control" id="message-text" name="ket_krisma_lk" readonly>{{dt.ket_krisma_lk}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nomor Registrasi Keluarga :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="no_regiskeluarga_lk" value="{{dt.no_regiskeluarga_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nama Ayah :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ayah_lk" value="{{dt.nama_ayah_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nama Ibu :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ibu_lk" value="{{dt.nama_ibu_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Status Pekerjaan Calon :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="pekerjaan_lk" value="{{dt.pekerjaan_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Lingkungan/Wilayah, Paroki :</label>
+                                                  <textarea class="form-control" id="message-text" name="ket_paroki_lk" readonly>{{dt.ket_paroki_lk}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Alamat :</label>
+                                                  <textarea class="form-control" id="message-text" name="alamat_lk" readonly>{{dt.alamat_lk}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nomor Telepon :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="telepon_lk" value="{{dt.telepon_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nama Saksi :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="nama_saksi_lk" value="{{dt.nama_saksi_lk}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Dispensasi :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="dispensasi_lk" value="{{dt.dispensasi_lk}}" readonly>
+                                              </div>
+                                              <br>
+                                              <h5>Pihak Wanita</h5>
+                                          <br>
+                            
+                                              <div class="mb-3">
+                                                <label for="namalengkap" class="form-label">Nama Lengkap :</label>
+                                                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_pr" value="{{dt.nama_pr}}" readonly>
+                                              <div class="row">
+                                              <div class="col-md-6 mb-3">
+                                                  <label for="namabaptis" class="form-label">Tempat Lahir :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="tempat_lahir_pr" value="{{dt.tempat_lahir_pr}}" readonly>
+                                              </div>
+                                              <div class="col-md-6 mb-3">
+                                                  <label for="namabaptis" class="form-label">Tanggal Lahir :</label>
+                                                  <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_lahir_pr" value="{{dt.tgl_lahir_pr}}" readonly>
+                                              </div>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Agama :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="agama_pr" value="{{dt.agama_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Tanggal Baptis, Gereja, Kota :</label>
+                                                  <textarea class="form-control" id="message-text" name="ket_baptis_pr" readonly>{{dt.ket_baptis_pr}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nomor Surat Baptis :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="no_baptis_pr" value="{{dt.no_baptis_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Tanggal Krisma, Gereja, Baptis :</label>
+                                                  <textarea class="form-control" id="message-text" name="ket_krisma_pr" readonly>{{dt.ket_krisma_pr}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nomor Registrasi Keluarga :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="no_regiskeluarga_pr" value="{{dt.no_regiskeluarga_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nama Ayah :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ayah_pr" value="{{dt.nama_ayah_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nama Ibu :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="nama_ibu_pr" value="{{dt.nama_ibu_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Status Pekerjaan Calon :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="pekerjaan_pr" value="{{dt.pekerjaan_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Lingkungan/Wilayah, Paroki :</label>
+                                                  <textarea class="form-control" id="message-text" name="ket_paroki_pr" readonly>{{dt.ket_paroki_pr}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Alamat :</label>
+                                                  <textarea class="form-control" id="message-text" name="alamat_pr" readonly>{{dt.alamat_pr}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nomor Telepon :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="telepon_pr" value="{{dt.telepon_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Nama Saksi :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="nama_saksi_pr" value="{{dt.nama_saksi_pr}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Dispensasi :</label>
+                                                  <input type="text" class="form-control" id="exampleInputPassword1" name="dispensasi_pr" value="{{dt.dispensasi_pr}}" readonly>
+                                              </div>
+                                              <br>
+                                              <h5>Pernikahan</h5>
+                                              
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Alamat Baru :</label>
+                                                  <textarea class="form-control" id="message-text" name="alamat_baru" readonly>{{dt.alamat_baru}}</textarea>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Mohon Diumumkan Tanggal :</label>
+                                                  <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_mohon" value="{{dt.tgl_mohon}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="namabaptis" class="form-label">Rencana Pernikahan Tanggal :</label>
+                                                  <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_nikah" value="{{dt.tgl_nikah}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="validationCustom02" class="form-label">Di Gereja :</label>
+                                                  <input type="text" class="form-control" id="validationCustom02" name="gereja" value="{{dt.gereja}}" readonly>
+                                              </div>
+                                              <div class="mb-3">
+                                                  <label for="message-text" class="col-form-label">Alamat Gereja :</label>
+                                                  <textarea class="form-control" id="message-text" name="alamat_gereja" readonly>{{dt.alamat_gereja}}</textarea>
+                                              </div>
+                                          <input type="hidden" name="user_id" value="{{dt.user_id}}">
+                                            <div class="mb-3">
+                                              <label for="validationCustom04" class="form-label">Keterangan</label>
+                                              <select class="form-select" id="validationCustom04" name="keterangan" required>
+                                                <option selected disabled value=""></option>
+                                                <option value="Ditolak">Ditolak</option>
+                                                <option value="Diterima">Diterima</option>
+                                              </select>
+                                            </div>
+                                            <!-- <input type="hidden" name="user_id" value="{{session.id}}"> -->
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Konfirmasi</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                    </div>
+                                </div>
+                                </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+  </main>
+
+{% block tail %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector("#tbDaftar").onsubmit = async (e) => {
+            e.preventDefault();
+            const req = new XMLHttpRequest();
+            req.onload = () => {
+                const data = JSON.parse(req.responseText);
+                if(data.success) {
+                    alert("Data berhasil ditambahkan!")
+                    location.reload();
+                } else {
+                    alert("Ada masalah");
+                }
+            }
+            const form = document.querySelector("#tbDaftar");
+            const datanya = new FormData(form);
+            await req.open("POST", "/tambahdaftar", true);
+            req.send(datanya);
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

@@ -9,7 +9,7 @@
     <br>
     <h5>Pihak Pria</h5>
     <br>
-    <form action="{{url_for('daftarbaptisbayi')}}" method="POST">
+    <form action="{{url_for('daftarperkawinan')}}" method="POST">
         <div class="mb-3">
           <label for="namalengkap" class="form-label">Nama Lengkap :</label>
           <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_lk" required>
@@ -78,7 +78,6 @@
         <br>
         <h5>Pihak Wanita</h5>
     <br>
-    <form action="{{url_for('daftarbaptisbayi')}}" method="POST">
         <div class="mb-3">
           <label for="namalengkap" class="form-label">Nama Lengkap :</label>
           <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama_pr" required>
@@ -168,7 +167,7 @@
             <textarea class="form-control" id="message-text" name="alamat_gereja" required></textarea>
         </div>
         <input type="hidden" name="user_id" value="{{session.id}}">
-        <input type="hidden" name="keterengan" value="Menunggu Konfirmasi">
+        <input type="hidden" name="keterangan" value="Menunggu Konfirmasi">
         <button type="submit" class="btn btn-primary">Daftar</button>
       </form>
 

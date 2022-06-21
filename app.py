@@ -64,6 +64,8 @@ class User(db.Model):
     # usernya = db.relationship('Profil', backref=db.backref('user', lazy=True))
     userbaptisbayi = db.relationship('Pendaftaranbaptis', backref=db.backref('user', lazy=True))
     userbaptisdewasa = db.relationship('Baptisdewasa', backref=db.backref('user', lazy=True))
+    userperkawinan = db.relationship('Perkawinan', backref=db.backref('user', lazy=True))
+    usermisa = db.relationship('Misa', backref=db.backref('user', lazy=True))
 
     def __init__(self, username, password, role, nama, alamat, telepon, wilayah, lingkungan, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tgl_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, no_kk):
         self.username = username
@@ -254,6 +256,66 @@ class Perkawinan(db.Model):
         self.tgl_nikah = tgl_nikah
         self.gereja = gereja
         self.alamat_gereja = alamat_gereja
+        self.user_id = user_id
+        self.keterangan = keterangan
+
+class Misa(db.Model):
+    __tablename__ = "daftarmisa"
+    id = db.Column(db.Integer, primary_key=True)
+    intensi = db.Column(db.String(50))
+    hari_tgl = db.Column(db.String(30))
+    jam = db.Column(db.String(10))
+    alamat = db.Column(db.Text)
+    telepon = db.Column(db.String(15))
+    lingkungan = db.Column(db.Text)
+    wilayah = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    keterangan = db.Column(db.String(20))
+
+    def __init__(self, intensi, hari_tgl, jam, alamat, telepon, lingkungan, wilayah, user_id, keterangan):
+        self.intensi = intensi
+        self.hari_tgl = hari_tgl
+        self.jam = jam
+        self.alamat = alamat
+        self.telepon = telepon
+        self.lingkungan = lingkungan
+        self.wilayah = wilayah
+        self.user_id = user_id
+        self.keterangan = keterangan
+
+class Komunipertama(db.Model):
+    __tablename__ = "daftarkomunipertama"
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(50))
+    nama_pemandian = db.Column(db.String(50))
+    tempat_lahir = db.Column(db.String(20))
+    tgl_lahir = db.Column(db.String(20))
+    tempat_pemandian = db.Column(db.String(50))
+    tgl_pemandian = db.Column(db.String(20))
+    nama_ayah = db.Column(db.String(50))
+    nama_ibu = db.Column(db.String(50))
+    alamat = db.Column(db.Text)
+    wilayah = db.Column(db.Text)
+    lingkungan = db.Column(db.Text)
+    telepon = db.Column(db.String(15))
+    sekolah = db.Column(db.String(30))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    keterangan = db.Column(db.String(20))
+
+    def __init__(self, nama, nama_pemandian, tempat_lahir, tgl_lahir, tempat_pemandian, tgl_pemandian, nama_ayah, nama_ibu, alamat, wilayah, lingkungan, telepon, sekolah, user_id, keterangan):
+        self.nama = nama
+        self.nama_pemandian = nama_pemandian
+        self.tempat_lahir = tempat_lahir
+        self.tgl_lahir = tgl_lahir
+        self.tempat_pemandian = tempat_pemandian
+        self.tgl_pemandian = tgl_pemandian
+        self.nama_ayah = nama_ayah
+        self.nama_ibu = nama_ibu
+        self.alamat = alamat
+        self.wilayah = wilayah
+        self.lingkungan = lingkungan
+        self.telepon = telepon
+        self.sekolah = sekolah
         self.user_id = user_id
         self.keterangan = keterangan
 
@@ -557,12 +619,161 @@ def daftarbaptisdewasa():
         return redirect(request.referrer)
 
 # Halaman Admin Perkawinan
+@app.route('/admperkawinan')
+@login_dulu
+def admperkawinan():
+    data = Perkawinan.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
+    return render_template('admin/perkawinan.html', data=data)
+
+@app.route('/konfperkawinan/<id>', methods=['GET', 'POST'])
+@login_dulu
+def konfperkawinan(id):
+    data = Perkawinan.query.filter_by(id=id). first()
+    if request.method == "POST":
+        data.nama_lk = request.form['nama_lk']
+        data.tempat_lahir_lk = request.form['tempat_lahir_lk']
+        data.tgl_lahir_lk = request.form['tgl_lahir_lk']
+        data.agama_lk = request.form['agama_lk']
+        data.ket_baptis_lk = request.form['ket_baptis_lk']
+        data.no_baptis_lk = request.form['no_baptis_lk']
+        data.ket_krisma_lk = request.form['ket_krisma_lk']
+        data.no_regiskeluarga_lk = request.form['no_regiskeluarga_lk']
+        data.nama_ayah_lk = request.form['nama_ayah_lk']
+        data.nama_ibu_lk = request.form['nama_ibu_lk']
+        data.pekerjaan_lk = request.form['pekerjaan_lk']
+        data.ket_paroki_lk = request.form['ket_paroki_lk']
+        data.alamat_lk = request.form['alamat_lk']
+        data.telepon_lk = request.form['telepon_lk']
+        data.nama_saksi_lk = request.form['nama_saksi_lk']
+        data.dispensasi_lk = request.form['dispensasi_lk']
+        data.nama_pr = request.form['nama_pr']
+        data.tempat_lahir_pr = request.form['tempat_lahir_pr']
+        data.tgl_lahir_pr = request.form['tgl_lahir_pr']
+        data.agama_pr = request.form['agama_pr']
+        data.ket_baptis_pr = request.form['ket_baptis_pr']
+        data.no_baptis_pr = request.form['no_baptis_pr']
+        data.ket_krisma_pr = request.form['ket_krisma_pr']
+        data.no_regiskeluarga_pr = request.form['no_regiskeluarga_pr']
+        data.nama_ayah_pr = request.form['nama_ayah_pr']
+        data.nama_ibu_pr = request.form['nama_ibu_pr']
+        data.pekerjaan_pr = request.form['pekerjaan_pr']
+        data.ket_paroki_pr = request.form['ket_paroki_pr']
+        data.alamat_pr = request.form['alamat_pr']
+        data.telepon_pr = request.form['telepon_pr']
+        data.nama_saksi_pr = request.form['nama_saksi_pr']
+        data.dispensasi_pr = request.form['dispensasi_pr']
+        data.alamat_baru = request.form['alamat_baru']
+        data.tgl_mohon = request.form['tgl_mohon']
+        data.tgl_nikah = request.form['tgl_nikah']
+        data.gereja = request.form['gereja']
+        data.alamat_gereja = request.form['alamat_gereja']
+        data.user_id = request.form['user_id']
+        data.keterangan = request.form['keterangan']
+        db.session.add(data)
+        db.session.commit()
+        return redirect(request.referrer)
 
 # Halaman User Perkawinan
 @app.route('/perkawinan')
 @login_dulu
 def perkawinan():
     return render_template('user/perkawinan.html')
+
+@app.route('/daftarperkawinan', methods=['GET', 'POST'])
+@login_dulu
+def daftarperkawinan():
+    if request.method == "POST":
+        nama_lk = request.form['nama_lk']
+        tempat_lahir_lk = request.form['tempat_lahir_lk']
+        tgl_lahir_lk = request.form['tgl_lahir_lk']
+        agama_lk = request.form['agama_lk']
+        ket_baptis_lk = request.form['ket_baptis_lk']
+        no_baptis_lk = request.form['no_baptis_lk']
+        ket_krisma_lk = request.form['ket_krisma_lk']
+        no_regiskeluarga_lk = request.form['no_regiskeluarga_lk']
+        nama_ayah_lk = request.form['nama_ayah_lk']
+        nama_ibu_lk = request.form['nama_ibu_lk']
+        pekerjaan_lk = request.form['pekerjaan_lk']
+        ket_paroki_lk = request.form['ket_paroki_lk']
+        alamat_lk = request.form['alamat_lk']
+        telepon_lk = request.form['telepon_lk']
+        nama_saksi_lk = request.form['nama_saksi_lk']
+        dispensasi_lk = request.form['dispensasi_lk']
+        nama_pr = request.form['nama_pr']
+        tempat_lahir_pr = request.form['tempat_lahir_pr']
+        tgl_lahir_pr = request.form['tgl_lahir_pr']
+        agama_pr = request.form['agama_pr']
+        ket_baptis_pr = request.form['ket_baptis_pr']
+        no_baptis_pr = request.form['no_baptis_pr']
+        ket_krisma_pr = request.form['ket_krisma_pr']
+        no_regiskeluarga_pr = request.form['no_regiskeluarga_pr']
+        nama_ayah_pr = request.form['nama_ayah_pr']
+        nama_ibu_pr = request.form['nama_ibu_pr']
+        pekerjaan_pr = request.form['pekerjaan_pr']
+        ket_paroki_pr = request.form['ket_paroki_pr']
+        alamat_pr = request.form['alamat_pr']
+        telepon_pr = request.form['telepon_pr']
+        nama_saksi_pr = request.form['nama_saksi_pr']
+        dispensasi_pr = request.form['dispensasi_pr']
+        alamat_baru = request.form['alamat_baru']
+        tgl_mohon = request.form['tgl_mohon']
+        tgl_nikah = request.form['tgl_nikah']
+        gereja = request.form['gereja']
+        alamat_gereja = request.form['alamat_gereja']
+        user_id = request.form['user_id']
+        keterangan = request.form['keterangan']
+        db.session.add(Perkawinan(nama_lk, tempat_lahir_lk, tgl_lahir_lk, agama_lk, ket_baptis_lk, no_baptis_lk, ket_krisma_lk, no_regiskeluarga_lk, nama_ayah_lk, nama_ibu_lk, pekerjaan_lk, ket_paroki_lk, alamat_lk, telepon_lk, nama_saksi_lk, dispensasi_lk, nama_pr, tempat_lahir_pr, tgl_lahir_pr, agama_pr, ket_baptis_pr, no_baptis_pr, ket_krisma_pr, no_regiskeluarga_pr, nama_ayah_pr, nama_ibu_pr, pekerjaan_pr, ket_paroki_pr, alamat_pr, telepon_pr, nama_saksi_pr, dispensasi_pr, alamat_baru, tgl_mohon, tgl_nikah, gereja, alamat_gereja, user_id, keterangan))
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman Admin Misa
+@app.route('/admmisa')
+@login_dulu
+def admmisa():
+    data = Misa.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
+    return render_template('admin/misa.html', data=data)
+
+@app.route('/konfmisa/<id>', methods=['GET', 'POST'])
+@login_dulu
+def konfmisa(id):
+    data = Misa.query.filter_by(id=id). first()
+    if request.method == "POST":
+        data.intensi = request.form['intensi']
+        data.hari_tgl = request.form['hari_tgl']
+        data.jam = request.form['jam']
+        data.alamat = request.form['alamat']
+        data.telepon = request.form['telepon']
+        data.lingkungan = request.form['lingkungan']
+        data.wilayah = request.form['wilayah']
+        data.user_id = request.form['user_id']
+        data.keterangan = request.form['keterangan']
+        db.session.add(data)
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman User Misa
+@app.route('/misa')
+@login_dulu
+def misa():
+    data = User.query.filter_by(id=id). first()
+    return render_template('user/misa.html', data=data)
+
+@app.route('/daftarmisa', methods=['GET', 'POST'])
+@login_dulu
+def daftarmisa():
+    if request.method == "POST":
+        intensi = request.form['intensi']
+        hari_tgl = request.form['hari_tgl']
+        jam = request.form['jam']
+        alamat = request.form['alamat']
+        telepon = request.form['telepon']
+        lingkungan = request.form['lingkungan']
+        wilayah = request.form['wilayah']
+        user_id = request.form['user_id']
+        keterangan = request.form['keterangan']
+        db.session.add(Misa(intensi, hari_tgl, jam, alamat, telepon, lingkungan, wilayah, user_id, keterangan))
+        db.session.commit()
+        return redirect(request.referrer)
 
 @app.route('/logout')
 @login_dulu
