@@ -1,0 +1,61 @@
+{% extends 'index.html' %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2 judulform">SURAT PENGANTAR LINGKUNGAN & WILAYAH</h1>   
+    </div>
+    <form action="{{url_for('daftarpengantarlingkungan')}}" method="POST">
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nama Lengkap :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="nama" value="{{session.nama}}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Status Pekerjaan :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="status_pekerjaan" required>
+        </div>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Tempat Lahir :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="tempat_lahir" value="{{session.tempat_lahir}}" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Tanggal Lahir :</label>
+            <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_lahir" value="{{session.tgl_lahir}}" readonly>
+        </div>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Kartu Keluarga Katolik :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="no_kk" value="{{session.no_kk}}" readonly>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Alamat</label>
+            <textarea class="form-control" id="message-text" name="alamat" readonly>{{session.alamat}}</textarea>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Nomor Telepon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="telepon" value="{{session.telepon}}" readonly>
+        </div>
+        <div class="row">
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Lingkungan Pemohon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="lingkungan" value="{{session.lingkungan}}" readonly>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label for="namabaptis" class="form-label">Wilayah Pemohon :</label>
+            <input type="text" class="form-control" id="exampleInputPassword1" name="wilayah" value="{{session.wilayah}}" readonly>
+        </div>
+        </div>
+        <div class="mb-3">
+            <label for="message-text" class="col-form-label">Surat Pengantar Ini Akan Dipergunakan Untuk :</label>
+            <textarea class="form-control" id="message-text" name="keperluan" required></textarea>
+        </div>
+        <input type="hidden" name="user_id" value="{{session.id}}">
+        <input type="hidden" name="keterangan" value="Menunggu Konfirmasi">
+        <button type="submit" class="btn btn-primary">Daftar</button>
+      </form>
+  </main>
+
+
+{% endblock %}

@@ -1,6 +1,6 @@
 from ast import keyword
 from random import choices
-from re import S
+from re import S, template
 from turtle import Pen
 from wsgiref.validate import validator
 from flask import Flask, jsonify, render_template, request, redirect, request, url_for, session, flash, json
@@ -316,6 +316,36 @@ class Komunipertama(db.Model):
         self.lingkungan = lingkungan
         self.telepon = telepon
         self.sekolah = sekolah
+        self.user_id = user_id
+        self.keterangan = keterangan
+
+class Pengantarlingkungan(db.Model):
+    __tablename__ = 'daftarpengantarlingkungan'
+    id = db.Column(db.Integer, primary_key=True)
+    nama = db.Column(db.String(50))
+    status_pekerjaan = db.Column(db.String(10))
+    tempat_lahir = db.Column(db.String(20))
+    tgl_lahir = db.Column(db.String(20))
+    no_kk = db.Column(db.String(50))
+    alamat = db.Column(db.Text)
+    telepon = db.Column(db.String(15))
+    lingkungan = db.Column(db.Text)
+    wilayah = db.Column(db.Text)
+    keperluan = db.Column(db.Text)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    keterangan = db.Column(db.String(20))
+
+    def __init__(self, nama, status_pekerjaan, tempat_lahir, tgl_lahir, no_kk, alamat, telepon, lingkungan, wilayah, keperluan, user_id, keterangan):
+        self.nama = nama
+        self.status_pekerjaan = status_pekerjaan
+        self.tempat_lahir = tempat_lahir
+        self.tgl_lahir = tgl_lahir
+        self.no_kk = no_kk
+        self.alamat = alamat
+        self.telepon = telepon
+        self.lingkungan = lingkungan
+        self.wilayah = wilayah
+        self.keperluan = keperluan
         self.user_id = user_id
         self.keterangan = keterangan
 
@@ -774,6 +804,123 @@ def daftarmisa():
         db.session.add(Misa(intensi, hari_tgl, jam, alamat, telepon, lingkungan, wilayah, user_id, keterangan))
         db.session.commit()
         return redirect(request.referrer)
+
+# Halaman Admin Komuni Pertama
+@app.route('/admkomunipertama')
+@login_dulu
+def admkomunipertama():
+    data = Komunipertama.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
+    return render_template('admin/komunipertama.html', data=data)
+
+@app.route('/konfkomunipertama/<id>', methods=['GET', 'POST'])
+@login_dulu
+def konfkomunipertama(id):
+    data = Komunipertama.query.filter_by(id=id). first()
+    if request.method == "POST":
+        data.nama = request.form['nama']
+        data.nama_pemandian = request.form['nama_pemandian']
+        data.tempat_lahir = request.form['tempat_lahir']
+        data.tgl_lahir = request.form['tgl_lahir']
+        data.tempat_pemandian = request.form['tempat_pemandian']
+        data.tgl_pemandian = request.form['tgl_pemandian']
+        data.nama_ayah = request.form['nama_ayah']
+        data.nama_ibu = request.form['nama_ibu']
+        data.alamat = request.form['alamat']
+        data.wilayah = request.form['wilayah']
+        data.lingkungan = request.form['lingkungan']
+        data.telepon = request.form['telepon']
+        data.sekolah = request.form['sekolah']
+        data.user_id = request.form['user_id']
+        data.keterangan = request.form['keterangan']
+        db.session.add(data)
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman User Komuni Pertama
+@app.route('/komunipertama')
+@login_dulu
+def komunipertama():
+    data = Komunipertama.query.filter_by(id=id). first()
+    return render_template('user/komunipertama.html', data=data)
+
+@app.route('/daftarkomunipertama', methods=['GET', 'POST'])
+@login_dulu
+def daftarkomunipertama():
+    if request.method == "POST":
+        nama = request.form['nama']
+        nama_pemandian = request.form['nama_pemandian']
+        tempat_lahir = request.form['tempat_lahir']
+        tgl_lahir = request.form['tgl_lahir']
+        tempat_pemandian = request.form['tempat_pemandian']
+        tgl_pemandian = request.form['tgl_pemandian']
+        nama_ayah = request.form['nama_ayah']
+        nama_ibu = request.form['nama_ibu']
+        alamat = request.form['alamat']
+        wilayah = request.form['wilayah']
+        lingkungan = request.form['lingkungan']
+        telepon = request.form['telepon']
+        sekolah = request.form['sekolah']
+        user_id = request.form['user_id']
+        keterangan = request.form['keterangan']
+        db.session.add(Komunipertama(nama, nama_pemandian, tempat_lahir, tgl_lahir, tempat_pemandian, tgl_pemandian, nama_ayah, nama_ibu, alamat, wilayah, lingkungan, telepon, sekolah, user_id, keterangan))
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman Admin Pengantar Lingkungan
+@app.route('/admpengantarlingkungan')
+@login_dulu
+def admpengantarlingkungan():
+    data = Pengantarlingkungan.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
+    return render_template('admin/pengantarlingkungan.html', data=data)
+
+@app.route('/konfpengantarlingkungan/<id>', methods=['GET', 'POST'])
+@login_dulu
+def konfpengantarlingkungan(id):
+    data = Pengantarlingkungan.query.filter_by(id=id). first()
+    if request.method == "POST":
+        data.nama = request.form['nama']
+        data.status_pekerjaan = request.form['status_pekerjaan']
+        data.tempat_lahir = request.form['tempat_lahir']
+        data.tgl_lahir = request.form['tgl_lahir']
+        data.no_kk = request.form['no_kk']
+        data.alamat = request.form['alamat']
+        data.telepon = request.form['telepon']
+        data.lingkungan = request.form['lingkungan']
+        data.wilayah = request.form['wilayah']
+        data.keperluan = request.form['keperluan']
+        data.user_id = request.form['user_id']
+        data.keterangan = request.form['keterangan']
+        db.session.add(data)
+        db.session.commit()
+        return redirect(request.referrer)
+
+# Halaman User Pengantar Lingkungan
+@app.route('/pengantarlingkungan')
+@login_dulu
+def pengantarlingkungan():
+    data = User.query.filter_by(id=id). first()
+    return render_template('user/pengantarlingkungan.html')
+
+@app.route('/daftarpengantarlingkungan', methods=['GET', 'POST'])
+@login_dulu
+def daftarpengantarlingkungan():
+    if request.method == "POST":
+        nama = request.form['nama']
+        status_pekerjaan = request.form['status_pekerjaan']
+        tempat_lahir = request.form['tempat_lahir']
+        tgl_lahir = request.form['tgl_lahir']
+        no_kk = request.form['no_kk']
+        alamat = request.form['alamat']
+        telepon = request.form['telepon']
+        lingkungan = request.form['lingkungan']
+        wilayah = request.form['wilayah']
+        keperluan = request.form['keperluan']
+        user_id = request.form['user_id']
+        keterangan = request.form['keterangan']
+        db.session.add(Pengantarlingkungan(nama, status_pekerjaan, tempat_lahir, tgl_lahir, no_kk, alamat, telepon, lingkungan, wilayah, keperluan, user_id, keterangan))
+        db.session.commit()
+        return redirect(request.referrer)
+
 
 @app.route('/logout')
 @login_dulu
