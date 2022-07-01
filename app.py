@@ -66,6 +66,9 @@ class User(db.Model):
     userbaptisdewasa = db.relationship('Baptisdewasa', backref=db.backref('user', lazy=True))
     userperkawinan = db.relationship('Perkawinan', backref=db.backref('user', lazy=True))
     usermisa = db.relationship('Misa', backref=db.backref('user', lazy=True))
+    userkomunipertama = db.relationship('Komunipertama', backref=db.backref('user', lazy=True))
+    userpengantatlingkungan = db.relationship('Pengantarlingkungan', backref=db.backref('user', lazy=True))
+    useribadah = db.relationship('Daftaribadah', backref=db.backref('user', lazy=True))
 
     def __init__(self, username, password, role, nama, alamat, telepon, wilayah, lingkungan, jeniskelamin, hub, tempat_lahir, tgl_lahir, tempat_baptis, tgl_baptis, tempat_kopertama, gereja_kopertama, tgl_kopertama, tempat_penguatan, gereja_penguatan, tgl_penguatan, tempat_menikah, gereja_menikah, tgl_menikah, pekerjaan, no_kk):
         self.username = username
@@ -122,8 +125,9 @@ class Pendaftaranbaptis(db.Model):
     telepon = db.Column(db.String(15))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     keterengan = db.Column(db.String(20))
+    jadwal = db.Column(db.DateTime)
 
-    def __init__(self, nama, nama_baptis, tempat_lahir, tgl_lahir, nama_ayah, nama_ibu, nama_wali, no_kk, alamat, telepon, user_id, keterengan):
+    def __init__(self, nama, nama_baptis, tempat_lahir, tgl_lahir, nama_ayah, nama_ibu, nama_wali, no_kk, alamat, telepon, user_id, keterengan, jadwal):
         self.nama = nama
         self.nama_baptis = nama_baptis
         self.tempat_lahir = tempat_lahir
@@ -136,6 +140,7 @@ class Pendaftaranbaptis(db.Model):
         self.telepon = telepon
         self.user_id = user_id
         self.keterengan = keterengan
+        self.jadwal = jadwal
 
 class Baptisdewasa(db.Model):
     __tablename__ = 'daftarbaptisdewasa'
@@ -156,8 +161,9 @@ class Baptisdewasa(db.Model):
     telepon = db.Column(db.String(15))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     keterangan = db.Column(db.String(20))
+    jadwal = db.Column(db.DateTime)
 
-    def __init__(self, nama, nama_baptis, tempat_lahir, tgl_lahir, agama, nama_ayah, nama_ibu, pasangan, tgl_menikah, cara_menikah, nama_wali, no_regiskeluarga, alamat, telepon, user_id, keterangan):
+    def __init__(self, nama, nama_baptis, tempat_lahir, tgl_lahir, agama, nama_ayah, nama_ibu, pasangan, tgl_menikah, cara_menikah, nama_wali, no_regiskeluarga, alamat, telepon, user_id, keterangan, jadwal):
         self.nama = nama
         self.nama_baptis = nama_baptis
         self.tempat_lahir = tempat_lahir
@@ -174,6 +180,7 @@ class Baptisdewasa(db.Model):
         self.telepon = telepon
         self.user_id = user_id
         self.keterangan = keterangan
+        self.jadwal = jadwal
 
 class Perkawinan(db.Model):
     __tablename__ = "daftarperkawinan"
@@ -301,8 +308,9 @@ class Komunipertama(db.Model):
     sekolah = db.Column(db.String(30))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     keterangan = db.Column(db.String(20))
+    jadwal = db.Column(db.DateTime)
 
-    def __init__(self, nama, nama_pemandian, tempat_lahir, tgl_lahir, tempat_pemandian, tgl_pemandian, nama_ayah, nama_ibu, alamat, wilayah, lingkungan, telepon, sekolah, user_id, keterangan):
+    def __init__(self, nama, nama_pemandian, tempat_lahir, tgl_lahir, tempat_pemandian, tgl_pemandian, nama_ayah, nama_ibu, alamat, wilayah, lingkungan, telepon, sekolah, user_id, keterangan, jadwal):
         self.nama = nama
         self.nama_pemandian = nama_pemandian
         self.tempat_lahir = tempat_lahir
@@ -318,6 +326,7 @@ class Komunipertama(db.Model):
         self.sekolah = sekolah
         self.user_id = user_id
         self.keterangan = keterangan
+        self.jadwal = jadwal
 
 class Pengantarlingkungan(db.Model):
     __tablename__ = 'daftarpengantarlingkungan'
@@ -348,6 +357,58 @@ class Pengantarlingkungan(db.Model):
         self.keperluan = keperluan
         self.user_id = user_id
         self.keterangan = keterangan
+
+# class Status(db.Model):
+#     __tablename__ = 'status'
+#     id = db.Column(db.Integer, primary_key=True)
+#     jumlah_kursi = db.Column(db.Integer)
+#     statusnya = db.relationship('Ibadah', backref=db.backref('status', lazy=True))
+
+#     def __init__(self, jumlah_kursi):
+#         self.jumlah_kursi = jumlah_kursi
+
+class Ibadah(db.Model):
+    __tablename__ = 'ibadah'
+    id = db.Column(db.Integer, primary_key=True)
+    status = db.Column(db.String(20))
+    jam = db.Column(db.String(10))
+    tgl_ibadah = db.Column(db.String(20))
+    keterangan = db.Column(db.String(20))
+    daftarnya = db.relationship('Daftaribadah', backref=db.backref('ibadah', lazy=True))
+
+    def __init__(self, status, jam, tgl_ibadah, keterangan):
+        self.status = status
+        self.jam = jam
+        self.tgl_ibadah = tgl_ibadah
+        self.keterangan = keterangan
+
+class Daftaribadah(db.Model):
+    __tablename__ = 'daftaribadah'
+    id = db.Column(db.Integer, primary_key=True)
+    ibadah_id = db.Column(db.Integer, db.ForeignKey('ibadah.id'))
+    kursi = db.Column(db.String(5))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+    def __init__(self, ibadah_id, kursi, user_id):
+        self.ibadah_id = ibadah_id
+        self.kursi = kursi
+        self.user_id = user_id
+
+class Vaksinasi(db.Model):
+    __tablename__ = 'vaksin'
+    id = db.Column(db.Integer, primary_key=True)
+    instansi = db.Column(db.String(50))
+    jenis = db.Column(db.String(50))
+    tanggal = db.Column(db.String(50))
+    alamat = db.Column(db.Text)
+    link = db.Column(db.String(50))
+
+    def __init__(self, instansi, jenis, tanggal, alamat, link):
+        self.instansi = instansi
+        self.jenis = jenis
+        self.tanggal = tanggal
+        self.alamat = alamat
+        self.link = link
 
 db.create_all()
 
@@ -413,8 +474,19 @@ def login():
 @login_dulu
 def dashboard():
     data = User.query.filter_by(id=id). first()
-    data1 = Baptisdewasa.query.filter_by(id=id). all()
-    return render_template('dashboard.html', data=data, data1=data1)
+    data1 = Pendaftaranbaptis.query.all()
+    data2 = Baptisdewasa.query.all()
+    data3 = Perkawinan.query.all()
+    data4 = Misa.query.all()
+    data5 = Komunipertama.query.all()
+    data6 = Pengantarlingkungan.query.all()
+    admin1 = db.session.query(Pendaftaranbaptis). filter(Pendaftaranbaptis.keterengan == "Menunggu Konfirmasi"). count()
+    admin2 = db.session.query(Baptisdewasa). filter(Baptisdewasa.keterangan == "Menunggu Konfirmasi"). count()
+    admin3 = db.session.query(Perkawinan). filter(Perkawinan.keterangan == "Menunggu Konfirmasi"). count()
+    admin4 = db.session.query(Misa). filter(Misa.keterangan == "Menunggu Konfirmasi"). count()
+    admin5 = db.session.query(Komunipertama). filter(Komunipertama.keterangan == "Menunggu Konfirmasi"). count()
+    admin6 = db.session.query(Pengantarlingkungan). filter(Pengantarlingkungan.keterangan == "Menunggu Konfirmasi"). count()
+    return render_template('dashboard.html', data=data, data1=data1, data2=data2, data3=data3, data4=data4, data5=data5, data6=data6, admin1=admin1, admin2=admin2, admin3=admin3, admin4=admin4, admin5=admin5, admin6=admin6)
 
 # Halaman Kelola User
 @app.route('/kelola_user')
@@ -540,6 +612,12 @@ def admbaptisbayi():
     data = Pendaftaranbaptis.query.filter_by(keterengan="Menunggu Konfirmasi"). all()
     return render_template('admin/baptisbayi.html', data=data)
 
+@app.route('/lihatbaptisbayi')
+@login_dulu
+def lihatbaptisbayi():
+    data = Pendaftaranbaptis.query.all()
+    return render_template('admin/lihatbaptisbayi.html', data=data)
+
 @app.route('/konfbaptisbayi/<id>', methods=['GET', 'POST'])
 @login_dulu
 def konfbaptisbayi(id):
@@ -554,6 +632,7 @@ def konfbaptisbayi(id):
        data.nama_wali = request.form['nama_wali']
        data.user_id = request.form['user_id']
        data.keterengan = request.form['keterengan']
+       data.jadwal = request.form['jadwal']
        db.session.add(data)   
        db.session.commit()
        return redirect(request.referrer)
@@ -581,7 +660,8 @@ def daftarbaptisbayi():
         telepon = request.form['telepon']
         user_id = request.form['user_id']
         keterengan = request.form['keterengan']
-        db.session.add(Pendaftaranbaptis(nama, nama_baptis, tempat_lahir, tgl_lahir, nama_ayah, nama_ibu, nama_wali, no_kk, alamat, telepon, user_id, keterengan))
+        jadwal = request.form['jadwal']
+        db.session.add(Pendaftaranbaptis(nama, nama_baptis, tempat_lahir, tgl_lahir, nama_ayah, nama_ibu, nama_wali, no_kk, alamat, telepon, user_id, keterengan, jadwal))
         db.session.commit()
         return redirect(request.referrer)
 
@@ -591,6 +671,12 @@ def daftarbaptisbayi():
 def admbaptisdewasa():
     data = Baptisdewasa.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
     return render_template('admin/baptisdewasa.html', data=data)
+
+@app.route('/lihatbaptisdewasa')
+@login_dulu
+def lihatbaptisdewasa():
+    data = Baptisdewasa.query.all()
+    return render_template('admin/lihatbaptisdewasa.html', data=data)
 
 @app.route('/konfbaptisdewasa/<id>', methods=['GET', 'POST'])
 @login_dulu
@@ -613,6 +699,7 @@ def konfbaptisdewasa(id):
         data.telepon = request.form['telepon']
         data.user_id = request.form['user_id']
         data.keterangan = request.form['keterangan']
+        data.jadwal = request.form['jadwal']
         db.session.add(data)
         db.session.commit()
         return redirect(request.referrer)
@@ -644,7 +731,8 @@ def daftarbaptisdewasa():
         telepon = request.form['telepon']
         user_id = request.form['user_id']
         keterangan = request.form['keterangan']
-        db.session.add(Baptisdewasa(nama, nama_baptis, tempat_lahir, tgl_lahir, agama, nama_ayah, nama_ibu, pasangan, tgl_menikah, cara_menikah, nama_wali, no_regiskeluarga, alamat, telepon, user_id, keterangan))
+        jadwal = request.form['jadwal']
+        db.session.add(Baptisdewasa(nama, nama_baptis, tempat_lahir, tgl_lahir, agama, nama_ayah, nama_ibu, pasangan, tgl_menikah, cara_menikah, nama_wali, no_regiskeluarga, alamat, telepon, user_id, keterangan, jadwal))
         db.session.commit()
         return redirect(request.referrer)
 
@@ -654,6 +742,12 @@ def daftarbaptisdewasa():
 def admperkawinan():
     data = Perkawinan.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
     return render_template('admin/perkawinan.html', data=data)
+
+@app.route('/lihatperkawinan')
+@login_dulu
+def lihatperkawinan():
+    data = Perkawinan.query.all()
+    return render_template('admin/lihatperkawinan.html', data=data)
 
 @app.route('/konfperkawinan/<id>', methods=['GET', 'POST'])
 @login_dulu
@@ -763,6 +857,12 @@ def admmisa():
     data = Misa.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
     return render_template('admin/misa.html', data=data)
 
+@app.route('/lihatmisa')
+@login_dulu
+def lihatmisa():
+    data = Misa.query.all()
+    return render_template('admin/lihatmisa.html', data=data)
+
 @app.route('/konfmisa/<id>', methods=['GET', 'POST'])
 @login_dulu
 def konfmisa(id):
@@ -812,6 +912,12 @@ def admkomunipertama():
     data = Komunipertama.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
     return render_template('admin/komunipertama.html', data=data)
 
+@app.route('/lihatkomunipertama')
+@login_dulu
+def lihatkomunipertama():
+    data = Komunipertama.query.all()
+    return render_template('admin/lihatkomunipertama.html', data=data)
+
 @app.route('/konfkomunipertama/<id>', methods=['GET', 'POST'])
 @login_dulu
 def konfkomunipertama(id):
@@ -832,6 +938,7 @@ def konfkomunipertama(id):
         data.sekolah = request.form['sekolah']
         data.user_id = request.form['user_id']
         data.keterangan = request.form['keterangan']
+        data.jadwal = request.form['jadwal']
         db.session.add(data)
         db.session.commit()
         return redirect(request.referrer)
@@ -862,7 +969,8 @@ def daftarkomunipertama():
         sekolah = request.form['sekolah']
         user_id = request.form['user_id']
         keterangan = request.form['keterangan']
-        db.session.add(Komunipertama(nama, nama_pemandian, tempat_lahir, tgl_lahir, tempat_pemandian, tgl_pemandian, nama_ayah, nama_ibu, alamat, wilayah, lingkungan, telepon, sekolah, user_id, keterangan))
+        jadwal = request.form['jadwal']
+        db.session.add(Komunipertama(nama, nama_pemandian, tempat_lahir, tgl_lahir, tempat_pemandian, tgl_pemandian, nama_ayah, nama_ibu, alamat, wilayah, lingkungan, telepon, sekolah, user_id, keterangan, jadwal))
         db.session.commit()
         return redirect(request.referrer)
 
@@ -872,6 +980,12 @@ def daftarkomunipertama():
 def admpengantarlingkungan():
     data = Pengantarlingkungan.query.filter_by(keterangan="Menunggu Konfirmasi"). all()
     return render_template('admin/pengantarlingkungan.html', data=data)
+
+@app.route('/lihatpengantarlingkungan')
+@login_dulu
+def lihatpengantarlingkungan():
+    data = Pengantarlingkungan.query.all()
+    return render_template('admin/lihatpengantarlingkungan.html', data=data)
 
 @app.route('/konfpengantarlingkungan/<id>', methods=['GET', 'POST'])
 @login_dulu
@@ -921,6 +1035,108 @@ def daftarpengantarlingkungan():
         db.session.commit()
         return redirect(request.referrer)
 
+# Halaman Admin Kelola Ibadah
+@app.route('/kelola_ibadah', methods=['GET', 'POST'])
+@login_dulu
+def kelola_ibadah():
+    return render_template('admin/kelola_ibadah.html')
+
+@app.route('/tambahibadah', methods=['GET', 'POST'])
+@login_dulu
+def tambahibadah():
+    if request.method == "POST":
+        status = request.form['status']
+        jam = request.form['jam']
+        tgl_ibadah = request.form['tgl_ibadah']
+        keterangan = request.form['keterangan']
+        db.session.add(Ibadah(status, jam, tgl_ibadah, keterangan))
+        db.session.commit()
+        return redirect(request.referrer)
+          
+@app.route('/admibadah')
+@login_dulu
+def admibadah():
+    data = Ibadah.query.filter_by(keterangan="Dibuka"). all()
+    return render_template('admin/ibadah.html', data=data)
+
+@app.route('/tutupibadah/<id>', methods=['GET', 'POST'])
+@login_dulu
+def tutupibadah(id):
+    data = Ibadah.query.filter_by(id=id). first()
+    if request.method == "POST":
+       data.status = request.form['status']
+       data.jam = request.form['jam'] 
+       data.tgl_ibadah = request.form['tgl_ibadah']
+       data.keterangan = request.form['keterangan']
+       db.session.add(data)   
+       db.session.commit()
+       return redirect(request.referrer)
+
+@app.route('/lihatibadah')
+@login_dulu
+def lihatibadah():
+    data = Daftaribadah.query.all()
+    return render_template('admin/lihatibadah.html', data=data)
+
+# Halaman User Ibadah
+@app.route('/ibadah')
+@login_dulu
+def ibadah():
+    data = Ibadah.query.filter_by(keterangan="Dibuka"). all()
+    return render_template('user/ibadah.html', data=data)
+
+@app.route('/daftaribadah/<id>', methods=['GET', 'POST'])
+@login_dulu
+def daftaribadah(id):
+    data = Ibadah.query.filter_by(id=id). first()
+    if request.method == "POST":
+        ibadah_id = request.form['ibadah_id']
+        kursi = request.form['kursi']
+        user_id = request.form['user_id']
+    # data.keterangan = "Dibuka"
+    # db.session.add(data)
+    # db.sesion.commit()
+        db.session.add(Daftaribadah(ibadah_id, kursi, user_id))
+        db.session.commit()
+        return redirect(request.referrer)
+
+@app.route('/getIbadah', methods=['GET', 'POST'])
+@login_dulu
+def getIbadah():
+    tgl_ibadah = request.form['tgl_ibadah']
+    db.session.add(Daftaribadah(tgl_ibadah))
+    db.session.commit()
+    return render_template('user/ibadah.html')
+
+@app.route('/kursi')
+def kursi():
+    return render_template('dummykursi.html')
+
+@app.route('/kelola_vaksin')
+@login_dulu
+def kelola_vaksin():
+    data = Vaksinasi.query.all()
+    data1 = Kartukeluarga.query.filter(Kartukeluarga.no_kk != "Admin"). all()
+    return render_template('admin/vaksin.html', data=data)
+
+@app.route('/tambah_vaksin', methods=['GET', 'POST'])
+@login_dulu
+def tambah_vaksin():
+    if request.method == "POST":
+        instansi = request.form['instansi']
+        jenis = request.form['jenis']
+        tanggal = request.form['tanggal']
+        alamat = request.form['alamat']
+        link = request.form['link']
+        db.session.add(Vaksinasi(instansi, jenis, tanggal, alamat, link))
+        db.session.commit()
+        return redirect(request.referrer)
+
+@app.route('/vaksin')
+@login_dulu
+def vaksin():
+    data = Vaksinasi.query.all()
+    return render_template('user/vaksin.html', data=data)
 
 @app.route('/logout')
 @login_dulu

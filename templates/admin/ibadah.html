@@ -1,0 +1,112 @@
+{% extends 'index.html' %}
+
+{% block title %}Ibadah{% endblock %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">Waktu Ibadah</h1>   
+      </div>
+      <a href="/lihatibadah" class="btn btn-primary btn-sm">Lihat Pendaftaran</a>
+    <br><br>
+
+    <div class="container">
+        
+        <br>
+        <div class="card">
+            <h5 class="card-header">Table User</h5>
+            <div class="card-body">
+                <table class="table table-bordered table-sm" id="myTable">
+                    <thead class="table table-dark">
+                      <tr>
+                        <th scope="col">No.</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Jam</th>
+                        <th scope="col">Tanggal</th>
+                        <th scope="col">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    {% for dt in data %}
+                      <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td>{{dt.status}}</td>
+                        <td>{{dt.jam}}</td>
+                        <td>{{dt.tgl_ibadah}}</td>
+                        <td>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Detail</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="/tutupibadah/{{dt.id}}" method="POST" class="row g-3 needs-validation">
+                                            <div class="mb-3">
+                                                <label for="namabaptis" class="form-label">Status :</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="status" value="{{dt.status}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="namabaptis" class="form-label">Jam Pelaksanaan :</label>
+                                                <input type="text" class="form-control" id="exampleInputPassword1" name="jam" value="{{dt.jam}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="namabaptis" class="form-label">Tanggal Pelaksanaan :</label>
+                                                <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_ibadah" value="{{dt.tgl_ibadah}}" readonly>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label for="validationCustom04" class="form-label">Keterangan</label>
+                                                <select class="form-select" id="validationCustom04" name="keterangan" required>
+                                                  <option selected disabled value=""></option>
+                                                  <option value="Ditutup">Ditutup</option>
+                                                </select>
+                                              </div>
+                                            <!-- <input type="hidden" name="user_id" value="{{session.id}}"> -->
+                                    
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="submit" class="btn btn-primary">Konfirmasi</button>
+                                    </div>
+                                    </form>
+                                </div>
+                                    </div>
+                                </div>
+                                </div>
+                        </td>
+                      </tr>
+                    {% endfor %}
+                    </tbody>
+                  </table>
+            </div>
+        </div>
+    </div>
+  </main>
+
+  {% block tail %}
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+            document.querySelector("#editUser").onsubmit = async (e) => {
+                e.preventDefault();
+                const req = new XMLHttpRequest();
+                req.onload = () => {
+                    const data = JSON.parse(req.responseText);
+                    if(data.success) {
+                        alert("Data berhasil diubah!")
+                        location.reload();
+                    } else {
+                        alert("Ada masalah");
+                    }
+                }
+                const form = document.querySelector("#editUser");
+                const datanya = new FormData(form);
+                const nilai = document.querySelector("#eUser").value;
+                await req.open("POST", `/edit_user/${nilai}`, true);
+                req.send(datanya);
+            }
+        });
+  </script>
+{% endblock %}
+  {% endblock %}

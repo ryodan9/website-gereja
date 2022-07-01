@@ -1,0 +1,386 @@
+{% extends 'index.html' %}
+
+{% block title %}Daftar Ibadah{% endblock %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2">Pendaftaran Ibadah Minggu Ini</h1>   
+    </div>
+    {% for dt in data %}
+    <div class="card text-center">
+        <!-- <div class="card-header">
+          Featured
+        </div> -->
+        <div class="card-body">
+          <h5 class="card-title">Pendaftaran Ibadah</h5>
+          <p class="card-text">Tanggal {{dt.tgl_ibadah}}</p>
+          <div class="d-grid gap-2 col-2 mx-auto">
+          <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>Daftar</b></button>
+            </div>
+            <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Daftar Ibadah</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form action="/daftaribadah/{{dt.id}}" method="POST" class="row g-3 needs-validation">
+                            <input type="hidden" name="ibadah_id" value="{{dt.id}}">
+                            {% if dt.status == "PPKM Level 1" %}
+                            <div class="mb-3">
+                              <label for="validationCustom04" class="form-label">Kursi</label>
+                              <select class="form-select" id="validationCustom04" name="kursi" required>
+                                <option selected disabled value=""></option>
+                                <option value="A1">A1</option>
+                                <option value="A2">A2</option>
+                                <option value="A3">A3</option>
+                                <option value="A4">A4</option>
+                                <option value="A5">A5</option>
+                                <option value="A6">A6</option>
+                                <option value="A7">A7</option>
+                                <option value="A8">A8</option>
+                                <option value="A9">A9</option>
+                                <option value="A10">A10</option>
+                                <option value="B1">B1</option>
+                                <option value="B2">B2</option>
+                                <option value="B3">B3</option>
+                                <option value="B4">B4</option>
+                                <option value="B5">B5</option>
+                                <option value="B6">B6</option>
+                                <option value="B7">B7</option>
+                                <option value="B8">B8</option>
+                                <option value="B9">B9</option>
+                                <option value="B10">B10</option>
+                                <option value="C1">C1</option>
+                                <option value="C2">C2</option>
+                                <option value="C3">C3</option>
+                                <option value="C4">C4</option>
+                                <option value="C5">C5</option>
+                                <option value="C6">C6</option>
+                                <option value="C7">C7</option>
+                                <option value="C8">C8</option>
+                                <option value="C9">C9</option>
+                                <option value="C10">C10</option>
+                                <option value="D1">D1</option>
+                                <option value="D2">D2</option>
+                                <option value="D3">D3</option>
+                                <option value="D4">D4</option>
+                                <option value="D5">D5</option>
+                                <option value="D6">D6</option>
+                                <option value="D7">D7</option>
+                                <option value="D8">D8</option>
+                                <option value="D9">D9</option>
+                                <option value="D10">D10</option>
+                                <option value="E1">E1</option>
+                                <option value="E2">E2</option>
+                                <option value="E3">E3</option>
+                                <option value="E4">E4</option>
+                                <option value="E5">E5</option>
+                                <option value="E6">E6</option>
+                                <option value="E7">E7</option>
+                                <option value="E8">E8</option>
+                                <option value="E9">E9</option>
+                                <option value="E10">E10</option>
+                                <option value="F1">F1</option>
+                                <option value="F2">F2</option>
+                                <option value="F3">F3</option>
+                                <option value="F4">F4</option>
+                                <option value="F5">F5</option>
+                                <option value="F6">F6</option>
+                                <option value="F7">F7</option>
+                                <option value="F8">F8</option>
+                                <option value="F9">F9</option>
+                                <option value="F10">F10</option> 
+                              </select>
+                            </div>
+                            <div class="ibadah-container">
+                                <label for="">Pilih Kursi yang Tersedia :</label>
+                            </div>
+                                <ul class="showcase">
+                                    <li>
+                                        <div class="kursi"></div>
+                                        <small>Tersedia</small>
+                                    </li>
+                                    <li>
+                                        <div class="kursi ditempati"></div>
+                                        <small>Ditempati</small>
+                                    </li>
+                                </ul>
+                                <div class="container-ibadah">
+                                    <div class="panggung">Panggung Gereja</div>
+                            
+                                    <div class="row-kursi">
+                                        <div class="kursi">A1</div>
+                                        <div class="kursi">A2</div>
+                                        <div class="kursi">A3</div>
+                                        <div class="kursi">A4</div>
+                                        <div class="kursi">A5</div>
+                                        <div class="kursi">A6</div>
+                                        <div class="kursi">A7</div>
+                                        <div class="kursi">A8</div>
+                                        <div class="kursi">A9</div>
+                                        <div class="kursi">A10</div>
+                            
+                                        <div class="kursi">B1</div>
+                                        <div class="kursi">B2</div>
+                                        <div class="kursi">B3</div>
+                                        <div class="kursi">B4</div>
+                                        <div class="kursi">B5</div>
+                                        <div class="kursi">B6</div>
+                                        <div class="kursi">B7</div>
+                                        <div class="kursi">B8</div>
+                                        <div class="kursi">B9</div>
+                                        <div class="kursi">B10</div>
+                                    </div>
+                            
+                                    <div class="row-kursi">
+                                        <div class="kursi">C1</div>
+                                        <div class="kursi">C2</div>
+                                        <div class="kursi">C3</div>
+                                        <div class="kursi">C4</div>
+                                        <div class="kursi">C5</div>
+                                        <div class="kursi">C6</div>
+                                        <div class="kursi">C7</div>
+                                        <div class="kursi">C8</div>
+                                        <div class="kursi">C9</div>
+                                        <div class="kursi">C10</div>
+                            
+                                        <div class="kursi">D1</div>
+                                        <div class="kursi">D2</div>
+                                        <div class="kursi">D3</div>
+                                        <div class="kursi">D4</div>
+                                        <div class="kursi">D5</div>
+                                        <div class="kursi">D6</div>
+                                        <div class="kursi">D7</div>
+                                        <div class="kursi">D8</div>
+                                        <div class="kursi">D9</div>
+                                        <div class="kursi">D10</div>
+                                    </div>
+                            
+                                    <div class="row-kursi">
+                                        <div class="kursi">E1</div>
+                                        <div class="kursi">E2</div>
+                                        <div class="kursi">E3</div>
+                                        <div class="kursi">E4</div>
+                                        <div class="kursi">E5</div>
+                                        <div class="kursi">E6</div>
+                                        <div class="kursi">E7</div>
+                                        <div class="kursi">E8</div>
+                                        <div class="kursi">E9</div>
+                                        <div class="kursi">E10</div>
+                            
+                                        <div class="kursi">F1</div>
+                                        <div class="kursi">F2</div>
+                                        <div class="kursi">F3</div>
+                                        <div class="kursi">F4</div>
+                                        <div class="kursi">F5</div>
+                                        <div class="kursi">F6</div>
+                                        <div class="kursi">F7</div>
+                                        <div class="kursi">F8</div>
+                                        <div class="kursi">F9</div>
+                                        <div class="kursi">F10</div>
+                                    </div>
+                            
+                                </div>
+                                {% elif dt.status == "PPKM Level 2" %}
+                                <div class="mb-3">
+                                    <label for="validationCustom04" class="form-label">Kursi</label>
+                                    <select class="form-select" id="validationCustom04" name="kursi" required>
+                                      <option selected disabled value=""></option>
+                                      <option value="A1">A1</option>
+                                      <option value="A2">A2</option>
+                                      <option value="A3">A3</option>
+                                      <option value="A4">A4</option>
+                                      <option value="A5">A5</option>
+                                      <option value="A6">A6</option>
+                                      <option value="A7">A7</option>
+                                      <option value="A8">A8</option>
+                                      <option value="A9">A9</option>
+                                      <option value="A10">A10</option>
+                                      <option value="B1">B1</option>
+                                      <option value="B2">B2</option>
+                                      <option value="B3">B3</option>
+                                      <option value="B4">B4</option>
+                                      <option value="B5">B5</option>
+                                      <option value="B6">B6</option>
+                                      <option value="B7">B7</option>
+                                      <option value="B8">B8</option>
+                                      <option value="B9">B9</option>
+                                      <option value="B10">B10</option>
+                                      <option value="C1">C1</option>
+                                      <option value="C2">C2</option>
+                                      <option value="C3">C3</option>
+                                      <option value="C4">C4</option>
+                                      <option value="C5">C5</option>
+                                      <option value="C6">C6</option>
+                                      <option value="C7">C7</option>
+                                      <option value="C8">C8</option>
+                                      <option value="C9">C9</option>
+                                      <option value="C10">C10</option>
+                                      <option value="D1">D1</option>
+                                      <option value="D2">D2</option>
+                                      <option value="D3">D3</option>
+                                      <option value="D4">D4</option>
+                                      <option value="D5">D5</option>
+                                      <option value="D6">D6</option>
+                                      <option value="D7">D7</option>
+                                      <option value="D8">D8</option>
+                                      <option value="D9">D9</option>
+                                      <option value="D10">D10</option>
+                                      <option value="E1">E1</option>
+                                      <option value="E2">E2</option>
+                                      <option value="E3">E3</option>
+                                      <option value="E4">E4</option>
+                                      <option value="E5">E5</option>
+                                      <option value="E6">E6</option>
+                                      <option value="E7">E7</option>
+                                      <option value="E8">E8</option>
+                                      <option value="E9">E9</option>
+                                      <option value="E10">E10</option>
+                                      <option value="F1">F1</option>
+                                      <option value="F2">F2</option>
+                                      <option value="F3">F3</option>
+                                      <option value="F4">F4</option>
+                                      <option value="F5">F5</option>
+                                      <option value="F6">F6</option>
+                                      <option value="F7">F7</option>
+                                      <option value="F8">F8</option>
+                                      <option value="F9">F9</option>
+                                      <option value="F10">F10</option> 
+                                    </select>
+                                  </div>
+                                  <div class="ibadah-container">
+                                      <label for="">Pilih Kursi yang Tersedia :</label>
+                                  </div>
+                                      <ul class="showcase">
+                                          <li>
+                                              <div class="kursi"></div>
+                                              <small>Tersedia</small>
+                                          </li>
+                                          <li>
+                                              <div class="kursi ditempati"></div>
+                                              <small>Ditempati</small>
+                                          </li>
+                                      </ul>
+                                      <div class="container-ibadah">
+                                          <div class="panggung">Panggung Gereja</div>
+                                  
+                                          <div class="row-kursi">
+                                              <div class="kursi">A1</div>
+                                              <div class="kursi ditempati">A2</div>
+                                              <div class="kursi">A3</div>
+                                              <div class="kursi ditempati">A4</div>
+                                              <div class="kursi">A5</div>
+                                              <div class="kursi ditempati">A6</div>
+                                              <div class="kursi">A7</div>
+                                              <div class="kursi ditempati">A8</div>
+                                              <div class="kursi">A9</div>
+                                              <div class="kursi ditempati">A10</div>
+                                  
+                                              <div class="kursi">B1</div>
+                                              <div class="kursi ditempati">B2</div>
+                                              <div class="kursi">B3</div>
+                                              <div class="kursi ditempati">B4</div>
+                                              <div class="kursi">B5</div>
+                                              <div class="kursi ditempati">B6</div>
+                                              <div class="kursi">B7</div>
+                                              <div class="kursi ditempati">B8</div>
+                                              <div class="kursi">B9</div>
+                                              <div class="kursi ditempati">B10</div>
+                                          </div>
+                                  
+                                          <div class="row-kursi">
+                                              <div class="kursi ditempati">C1</div>
+                                              <div class="kursi">C2</div>
+                                              <div class="kursi ditempati">C3</div>
+                                              <div class="kursi">C4</div>
+                                              <div class="kursi ditempati">C5</div>
+                                              <div class="kursi">C6</div>
+                                              <div class="kursi ditempati">C7</div>
+                                              <div class="kursi">C8</div>
+                                              <div class="kursi ditempati">C9</div>
+                                              <div class="kursi">C10</div>
+                                  
+                                              <div class="kursi ditempati">D1</div>
+                                              <div class="kursi">D2</div>
+                                              <div class="kursi ditempati">D3</div>
+                                              <div class="kursi">D4</div>
+                                              <div class="kursi ditempati">D5</div>
+                                              <div class="kursi">D6</div>
+                                              <div class="kursi ditempati">D7</div>
+                                              <div class="kursi">D8</div>
+                                              <div class="kursi ditempati">D9</div>
+                                              <div class="kursi">D10</div>
+                                          </div>
+                                  
+                                          <div class="row-kursi">
+                                              <div class="kursi">E1</div>
+                                              <div class="kursi ditempati">E2</div>
+                                              <div class="kursi">E3</div>
+                                              <div class="kursi ditempati">E4</div>
+                                              <div class="kursi">E5</div>
+                                              <div class="kursi ditempati">E6</div>
+                                              <div class="kursi">E7</div>
+                                              <div class="kursi ditempati">E8</div>
+                                              <div class="kursi">E9</div>
+                                              <div class="kursi ditempati">E10</div>
+                                  
+                                              <div class="kursi">F1</div>
+                                              <div class="kursi ditempati">F2</div>
+                                              <div class="kursi">F3</div>
+                                              <div class="kursi ditempati">F4</div>
+                                              <div class="kursi">F5</div>
+                                              <div class="kursi ditempati">F6</div>
+                                              <div class="kursi">F7</div>
+                                              <div class="kursi ditempati">F8</div>
+                                              <div class="kursi">F9</div>
+                                              <div class="kursi ditempati">F10</div>
+                                          </div>
+                                  
+                                      </div>
+                                      {% endif %}
+                            <input type="hidden" name="user_id" value="{{session.id}}">
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="submit" onclick="daftar()" class="btn btn-primary">Daftar</button>
+                    </div>
+                    </form>
+                </div>
+                    </div>
+                </div>
+                </div>
+          <!-- <a href="#" class="btn btn-primary">Go somewhere</a> -->
+        </div>
+      </div>
+      <br>
+      {% endfor %}
+  </main>
+
+{% block tail %}
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+        document.querySelector("#tbDaftar").onsubmit = async (e) => {
+            e.preventDefault();
+            const req = new XMLHttpRequest();
+            req.onload = () => {
+                const data = JSON.parse(req.responseText);
+                if(data.success) {
+                    alert("Data berhasil ditambahkan!")
+                    location.reload();
+                } else {
+                    alert("Ada masalah");
+                }
+            }
+            const form = document.querySelector("#tbDaftar");
+            const datanya = new FormData(form);
+            await req.open("POST", "/tambahdaftar", true);
+            req.send(datanya);
+        }
+    });
+</script>
+{% endblock %}
+{% endblock %}

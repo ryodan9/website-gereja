@@ -1,0 +1,34 @@
+{% extends 'index.html' %}
+
+{% block title %}Kelola Ibadah{% endblock %}
+
+{% block body %}
+
+<main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+      <h1 class="h2 judulform">WAKTU IBADAH</h1>   
+    </div>
+    <form action="{{url_for('tambahibadah')}}" method="POST">
+        <div class="mb-3">
+            <label for="validationCustom04" class="form-label">Status</label>
+            <select class="form-select" id="validationCustom04" name="status" required>
+              <option selected disabled value="">Pilih...</option>
+              <option value="PPKM Level 1">PPKM Level 1</option>
+              <option value="PPKM Level 2">PPKM Level 2</option>
+            </select>
+          </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Jam Pelaksanaan :</label>
+            <input type="time" class="form-control" id="exampleInputPassword1" name="jam" required>
+        </div>
+        <div class="mb-3">
+            <label for="namabaptis" class="form-label">Tanggal Pelaksanaan :</label>
+            <input type="date" class="form-control" id="exampleInputPassword1" name="tgl_ibadah" required>
+        </div>
+        <input type="hidden" name="keterangan" value="Dibuka">
+        <button type="submit" class="btn btn-primary">Buat</button>
+      </form>
+  </main>
+
+
+{% endblock %}

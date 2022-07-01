@@ -1,5 +1,13 @@
 from app import db, User, Kartukeluarga
 
+# jumlah_kursi = "100"
+# db.session.add(Status(jumlah_kursi))
+# db.session.commit()
+
+# jumlah_kursi = "50"
+# db.session.add(Status(jumlah_kursi))
+# db.session.commit()
+
 no_kk = "Admin"
 nama_kk = ""
 kepala_keluarga = ""

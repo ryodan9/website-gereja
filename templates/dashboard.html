@@ -1,12 +1,15 @@
 {% extends 'index.html' %}
 
+{% block title %}Dashboard{% endblock %}
+
 {% block body %}
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
+  {% if session.role == "Umat" %}
   <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h4>Selamat Datang, {{session.nama}}!</h4>
   </div>
-    
+   
     <div class="profilcard">
       <h5>Profil</h5>
       <!-- <a href="" class="nav-item btn btn-primary editprofil"><span>Edit Profil</span></a>  btn btn-sm btn-primary  -->
@@ -163,34 +166,266 @@
       <h5>Status Pendaftaran</h5>
     </div>
     <div class="card">
-      <h5 class="card-header">Table Kartu Keluarga</h5>
+      <h5 class="card-header">Pendaftaran Baptis Bayi</h5>
       <div class="card-body">
-          <table class="table table-bordered table-sm" id="myTable">
+          <table class="table table-bordered table-sm">
               <thead class="table table-dark">
                 <tr>
-                  <th scope="col">No.</th>
-                  <th scope="col">No Kartu Keluarga</th>
-                  <th scope="col">Nama Kartu Keluarga</th>
-                  <th scope="col">Kepala Keluarga</th>
-                  <th scope="col">Action</th>
+                  <th scope="col">#</th>
+                  <th scope="col">Nama Lengkap</th>
+                  <th scope="col">Nama Baptis</th>
+                  <th scope="col">Status</th>
+                  <th>Jadwal Pelaksanaan</th>
                 </tr>
               </thead>
               <tbody>
-                <!-- {% if data1.user_id == "2" %} -->
-              {% for dt1 in data1 %}
+                
+                {% for dt1 in data1 %}
+                {% if session.id == dt1.user.id %}
                 <tr>
-                  <th scope="row">{{loop.index}}</th>
+                  <td>-</td>
                   <td>{{dt1.nama}}</td>
-                  <td>{{session.id}}</td>
-                  <td>{{session.nama}}</td>
+                  <td>{{dt1.nama_baptis}}</td>
+                  <td>{{dt1.keterengan}}</td>
+                  <td>{{dt1.jadwal}}</td>
+                  
+              
                 </tr>
+                {% endif %}
               {% endfor %}
-              <!-- {% endif %} -->
+              
               </tbody>
             </table>
       </div>
   </div>
+  <br><br><br>
+  <div class="card">
+    <h5 class="card-header">Pendaftaran Baptis Dewasa</h5>
+    <div class="card-body">
+        <table class="table table-bordered table-sm">
+            <thead class="table table-dark">
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Nama Lengkap</th>
+                <th scope="col">Nama Baptis</th>
+                <th scope="col">Status</th>
+                <th>Jadwal Pelaksanaan</th>
+              </tr>
+            </thead>
+            <tbody>
+              
+              {% for dt2 in data2 %}
+              {% if session.id == dt2.user.id %}
+              <tr>
+                <td>-</td>
+                <td>{{dt2.nama}}</td>
+                <td>{{dt2.nama_baptis}}</td>
+                <td>{{dt2.keterangan}}</td>
+                <td>{{dt2.jadwal}}</td>
+                
+            
+              </tr>
+              {% endif %}
+            {% endfor %}
+            
+            </tbody>
+          </table>
+    </div>
+</div>
+<br><br><br>
+<div class="card">
+  <h5 class="card-header">Pendaftaran Sakramen Perkawinan</h5>
+  <div class="card-body">
+      <table class="table table-bordered table-sm">
+          <thead class="table table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama Lengkap Pria</th>
+              <th scope="col">Nama Lengkap Wanita</th>
+              <th scope="col">Status</th>
+              <th>Jadwal Pelaksanaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for dt3 in data3 %}
+            {% if session.id == dt3.user.id %}
+            <tr>
+              <td>-</td>
+              <td>{{dt3.nama_lk}}</td>
+              <td>{{dt3.nama_pr}}</td>
+              <td>{{dt3.keterangan}}</td>
+              <td>{{dt3.tgl_nikah}}</td>
+              
+          
+            </tr>
+            {% endif %}
+          {% endfor %}
+          
+          </tbody>
+        </table>
   </div>
+</div>
+<br><br><br>
+<div class="card">
+  <h5 class="card-header">Pendaftaran Misa</h5>
+  <div class="card-body">
+      <table class="table table-bordered table-sm">
+          <thead class="table table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Intensi</th>
+              <th scope="col">Tanggal</th>
+              <th scope="col">Jam</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for dt4 in data4 %}
+            {% if session.id == dt4.user.id %}
+            <tr>
+              <td>-</td>
+              <td>{{dt4.intensi}}</td>
+              <td>{{dt4.hari_tgl}}</td>
+              <td>{{dt4.jam}}</td>
+              <td>{{dt4.keterangan}}</td>
+              
+          
+            </tr>
+            {% endif %}
+          {% endfor %}
+          
+          </tbody>
+        </table>
+  </div>
+</div>
+<br><br><br>
+<div class="card">
+  <h5 class="card-header">Pendaftaran Komuni Pertama</h5>
+  <div class="card-body">
+      <table class="table table-bordered table-sm">
+          <thead class="table table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama Lengkap</th>
+              <th scope="col">Nama Pemandian</th>
+              <th scope="col">Status</th>
+              <th>Jadwal Pelaksanaan</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for dt5 in data5 %}
+            {% if session.id == dt5.user.id %}
+            <tr>
+              <td>-</td>
+              <td>{{dt5.nama}}</td>
+              <td>{{dt5.nama_pemandian}}</td>
+              <td>{{dt5.keterangan}}</td>
+              <td>{{dt5.jadwal}}</td>
+              
+          
+            </tr>
+            {% endif %}
+          {% endfor %}
+          
+          </tbody>
+        </table>
+  </div>
+</div>
+<br><br><br>
+<div class="card">
+  <h5 class="card-header">Pendaftaran Pengantar Lingkungan & Wilayah</h5>
+  <div class="card-body">
+      <table class="table table-bordered table-sm">
+          <thead class="table table-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nama Lengkap</th>
+              <th scope="col">Kepentingan</th>
+              <th scope="col">Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            
+            {% for dt6 in data6 %}
+            {% if session.id == dt6.user.id %}
+            <tr>
+              <td>-</td>
+              <td>{{dt6.nama}}</td>
+              <td>{{dt6.keperluan}}</td>
+              <td>{{dt6.keterangan}}</td>
+              
+          
+            </tr>
+            {% endif %}
+          {% endfor %}
+          
+          </tbody>
+        </table>
+  </div>
+</div>
+  </div>
+  {% elif session.role == "Admin" %}
+  <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h4>Pendaftaran Yang Belum Dikonfirmasi</h4>
+  </div>
+  <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col-lg-4 lg-6">
+        <a class="card text-white bg-primary mb-3" style=" max-width: 18rem;" href="/admbaptisbayi">
+          <div class="card-body">
+            <h5 class="card-title">Baptis Bayi</h5>
+            <h6>{{admin1}}</h6>
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-4 lg-6">
+        <a class="card text-white bg-success mb-3" style=" max-width: 18rem;" href="/admbaptisdewasa">
+          <div class="card-body">
+            <h5 class="card-title">Baptis Dewasa</h5>
+            <h6>{{admin2}}</h6>
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-4 lg-6">
+        <div class="card text-white bg-danger mb-3" style=" max-width: 18rem;" href="/admperkawinan">
+          <div class="card-body">
+            <h5 class="card-title">Perkawinan</h5>
+            <h6>{{admin3}}</h6>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+      <div class="col-lg-4 lg-6">
+        <a class="card text-white bg-secondary mb-3" style=" max-width: 18rem;" href="/admmisa">
+          <div class="card-body">
+            <h5 class="card-title">Misa</h5>
+            <h6>{{admin4}}</h6>
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-4 lg-6">
+        <a class="card text-white bg-warning mb-3" style=" max-width: 18rem;" href="/admkomunipertama">
+          <div class="card-body">
+            <h5 class="card-title">Komuni Pertama</h5>
+            <h6>{{admin5}}</h6>
+          </div>
+        </a>
+      </div>
+      <div class="col-lg-4 lg-6">
+        <a class="card text-white bg-info mb-3" style=" max-width: 18rem;" href="/admpengantarlingkungan">
+          <div class="card-body">
+            <h5 class="card-title">Pengantar Lingkungan</h5>
+            <h6>{{admin6}}</h6>
+          </div>
+        </a>
+      </div>
+    </div>
+
+  {% endif %}
 </main>
 
 {% block tail %}

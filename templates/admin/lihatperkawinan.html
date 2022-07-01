@@ -5,14 +5,10 @@
 {% block body %}
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-      <h1 class="h2">Kelola Pendaftaran Perkawinan</h1>   
-    </div>
-    <a href="/lihatperkawinan" class="btn btn-primary btn-sm">Lihat Pendaftaran</a>
-    <br><br>
     <div class="container">
+        <br>
         <div class="card">
-            <h5 class="card-header">Menunggu Konfirmasi</h5>
+            <h5 class="card-header">Pendaftaran Perkawinan</h5>
             <div class="card-body">
                 <table class="table table-bordered table-sm" id="myTable">
                     <thead class="table table-dark">
@@ -34,7 +30,7 @@
                         <td>{{dt.tgl_nikah}}</td>
                         <td>{{dt.gereja}}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>Lihat</b></button>
                             <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -43,7 +39,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/konfperkawinan/{{dt.id}}" method="POST" class="row g-3 needs-validation">
+                                        <form action="" method="" class="row g-3 needs-validation">
                                             <br>
                                             <h5>Pihak Pria</h5>
                                             <br>
@@ -208,16 +204,15 @@
                                             <div class="mb-3">
                                               <label for="validationCustom04" class="form-label">Keterangan</label>
                                               <select class="form-select" id="validationCustom04" name="keterangan" required>
-                                                <option selected disabled value=""></option>
-                                                <option value="Ditolak">Ditolak</option>
-                                                <option value="Diterima">Diterima</option>
+                                                <option selected disabled value="">{{dt.keterangan}}</option>
+                                                
                                               </select>
                                             </div>
                                             <!-- <input type="hidden" name="user_id" value="{{session.id}}"> -->
                                     
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Konfirmasi</button>
+                                        
                                     </div>
                                     </form>
                                 </div>
@@ -233,28 +228,4 @@
         </div>
     </div>
   </main>
-
-{% block tail %}
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector("#tbDaftar").onsubmit = async (e) => {
-            e.preventDefault();
-            const req = new XMLHttpRequest();
-            req.onload = () => {
-                const data = JSON.parse(req.responseText);
-                if(data.success) {
-                    alert("Data berhasil ditambahkan!")
-                    location.reload();
-                } else {
-                    alert("Ada masalah");
-                }
-            }
-            const form = document.querySelector("#tbDaftar");
-            const datanya = new FormData(form);
-            await req.open("POST", "/tambahdaftar", true);
-            req.send(datanya);
-        }
-    });
-</script>
-{% endblock %}
 {% endblock %}

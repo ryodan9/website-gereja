@@ -5,14 +5,14 @@
 {% block body %}
 
 <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <!-- <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
       <h1 class="h2">Kelola Pendaftaran</h1>   
-    </div>
-    <a href="/lihatbaptisbayi" class="btn btn-primary btn-sm">Lihat Pendaftaran</a>
-    <br><br>
+    </div> -->
+
     <div class="container">
+        <br>
         <div class="card">
-            <h5 class="card-header">Menunggu Konfirmasi</h5>
+            <h5 class="card-header">Pendaftaran Baptis Bayi</h5>
             <div class="card-body">
                 <table class="table table-bordered table-sm" id="myTable">
                     <thead class="table table-dark">
@@ -34,7 +34,7 @@
                         <td>{{dt.tempat_lahir}}</td>
                         <td>{{dt.tgl_lahir}}</td>
                         <td>
-                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>+</b></button>
+                            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal1{{dt.id}}" data-bs-whatever="@mdo"><b>Lihat</b></button>
                             <div class="modal fade" id="exampleModal1{{dt.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -43,7 +43,7 @@
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="/konfbaptisbayi/{{dt.id}}" method="POST" class="row g-3 needs-validation">
+                                        <form action="" method="" class="row g-3 needs-validation">
                                           <div class="mb-3">
                                             <label for="namalengkap" class="form-label">Nama Lengkap :</label>
                                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="nama" value="{{dt.nama}}" readonly>
@@ -88,21 +88,21 @@
                                           <input type="hidden" name="user_id" value="{{dt.user.id}}">
                                             <div class="mb-3">
                                               <label for="validationCustom04" class="form-label">Keterangan</label>
-                                              <select class="form-select" id="validationCustom04" name="keterengan" required>
-                                                <option selected disabled value="">{{data.keterengan}}</option>
-                                                <option value="Ditolak">Ditolak</option>
-                                                <option value="Diterima">Diterima</option>
+                                              <select class="form-select" id="validationCustom04" name="keterengan" readonly>
+                                                <option selected disabled value="">{{dt.keterengan}}</option>
+                                                <!-- <option value="Ditolak">Ditolak</option>
+                                                <option value="Diterima">Diterima</option> -->
                                               </select>
                                             </div>
                                             <div class="mb-3">
                                               <label for="namabaptis" class="form-label">Jadwal pelaksanaan :</label>
-                                              <input type="datetime-local" class="form-control" id="exampleInputPassword1" name="jadwal" required>
+                                              <input type="datetime-local" class="form-control" id="exampleInputPassword1" name="jadwal" value="{{dt.jadwal}}" readonly>
                                           </div>
                                             <!-- <input type="hidden" name="user_id" value="{{session.id}}"> -->
                                     
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="submit" class="btn btn-primary">Konfirmasi</button>
+                                        <!-- <button type="submit" class="btn btn-primary">Konfirmasi</button> -->
                                     </div>
                                     </form>
                                 </div>
@@ -119,27 +119,4 @@
     </div>
   </main>
 
-{% block tail %}
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-        document.querySelector("#tbDaftar").onsubmit = async (e) => {
-            e.preventDefault();
-            const req = new XMLHttpRequest();
-            req.onload = () => {
-                const data = JSON.parse(req.responseText);
-                if(data.success) {
-                    alert("Data berhasil ditambahkan!")
-                    location.reload();
-                } else {
-                    alert("Ada masalah");
-                }
-            }
-            const form = document.querySelector("#tbDaftar");
-            const datanya = new FormData(form);
-            await req.open("POST", "/tambahdaftar", true);
-            req.send(datanya);
-        }
-    });
-</script>
-{% endblock %}
 {% endblock %}
