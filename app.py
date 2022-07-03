@@ -381,6 +381,9 @@ class Ibadah(db.Model):
         self.jam = jam
         self.tgl_ibadah = tgl_ibadah
         self.keterangan = keterangan
+    
+    def __getitem__(self, field):
+        return self.__dict__[field]
 
 class Daftaribadah(db.Model):
     __tablename__ = 'daftaribadah'
@@ -393,6 +396,9 @@ class Daftaribadah(db.Model):
         self.ibadah_id = ibadah_id
         self.kursi = kursi
         self.user_id = user_id
+
+    def __getitem__(self, field):
+        return self.__dict__[field]
 
 class Vaksinasi(db.Model):
     __tablename__ = 'vaksin'
@@ -1085,6 +1091,42 @@ def ibadah():
     data = Ibadah.query.filter_by(keterangan="Dibuka"). all()
     return render_template('user/ibadah.html', data=data)
 
+@app.route('/lihatpendaftaranibadah')
+@login_dulu
+def lihatpendaftaranibadah():
+    userid = session['id']
+    data = Daftaribadah.query.filter_by(user_id = userid). all()
+
+    return render_template('user/lihatpendaftaranibadah.html', data=data)
+
+# data for json 
+@app.route('/getkursidata')
+def jsonApi():
+    data = Ibadah.query.filter_by(keterangan="Dibuka"). all()
+    kursi_data = Daftaribadah.query. all()
+
+    data_js_dict = []
+    for dt in data:
+        data_dict = {
+                'id': dt["id"],
+                'status': dt["status"],
+                'jam': dt["jam"],
+                'tgl_ibadah': dt["tgl_ibadah"],
+                'keterangan': dt["keterangan"]}
+        data_js_dict.append(data_dict)
+    
+    kursi_js_dict = []
+    for kursi_item in kursi_data:
+        kursi_dict = {
+                'id': kursi_item["id"],
+                'ibadah_id': kursi_item["ibadah_id"],
+                'kursi': kursi_item["kursi"],
+                'user_id': kursi_item["user_id"]}
+        kursi_js_dict.append(kursi_dict)
+    
+    return json.dumps([data_js_dict, kursi_js_dict])
+
+
 @app.route('/daftaribadah/<id>', methods=['GET', 'POST'])
 @login_dulu
 def daftaribadah(id):
@@ -1098,19 +1140,7 @@ def daftaribadah(id):
     # db.sesion.commit()
         db.session.add(Daftaribadah(ibadah_id, kursi, user_id))
         db.session.commit()
-        return redirect(request.referrer)
-
-@app.route('/getIbadah', methods=['GET', 'POST'])
-@login_dulu
-def getIbadah():
-    tgl_ibadah = request.form['tgl_ibadah']
-    db.session.add(Daftaribadah(tgl_ibadah))
-    db.session.commit()
-    return render_template('user/ibadah.html')
-
-@app.route('/kursi')
-def kursi():
-    return render_template('dummykursi.html')
+        return redirect(url_for('lihatpendaftaranibadah'))
 
 @app.route('/kelola_vaksin')
 @login_dulu
